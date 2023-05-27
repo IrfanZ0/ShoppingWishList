@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/storeInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="Store Information"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/store_information"
+        android:inputType="textMultiLine"
+        android:textColorHint="#00838F"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.744"
+        app:layout_constraintStart_toEndOf="@id/fragmentContainerView"
+        app:layout_constraintTop_toBottomOf="@id/fragmentContainerView"
+        app:layout_constraintVertical_bias="1.0"
+        tools:visibility="visible" />
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentContainerView"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        app:layout_constraintBottom_toTopOf="@id/storeInfo"
+        app:layout_constraintTop_toBottomOf="@id/Spinner_Container"
+        app:layout_constraintStart_toStartOf="@id/storeInfo"
+        app:layout_constraintEnd_toEndOf="@id/storeInfo">
+
+
+
+    </androidx.fragment.app.FragmentContainerView>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/Spinner_Container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="550dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/fragmentContainerView"
+        app:layout_constraintEnd_toStartOf="@id/fragmentContainerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <Spinner
+            android:id="@+id/category1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/category1"
+            android:minHeight="48dp" />
+
+        <Spinner
+            android:id="@+id/category2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/category2"
+            android:minHeight="48dp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <Spinner
+            android:id="@+id/category3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/category3"
+            android:minHeight="48dp" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
