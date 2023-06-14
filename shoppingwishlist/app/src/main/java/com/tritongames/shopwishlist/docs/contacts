@@ -1,0 +1,28 @@
+[
+    {
+        "First Name" : "Irfan",
+        "Last Name" : "Ziaulla",
+        "Email" : "iziaulla@gmail.com",
+        "Ephermal Key" : "",
+        "Client Secret" : "",
+        "Ephermal Secret" : "",
+        "Client ID" : "",
+        "Wishes" : [
+            {
+                "wish 1" : "Playstation 5",
+                "wish 2" : "Tesla",
+                "wish 3" : "BJ's Restaurant"
+            }
+
+        ],
+        "Address" : [
+            {
+                "Street Address" : "11149 Valjean Avenue",
+                "City" : "Granada Hills",
+                "State" : "California",
+                "Zip" : "91344"
+            }
+        ]
+    }
+
+]
