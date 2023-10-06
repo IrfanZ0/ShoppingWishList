@@ -7,7 +7,6 @@
     tools:context=".presentation.ShoppingARFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/merchRV"
         android:layout_width="97dp"
         android:layout_height="720dp"
         app:layout_constraintBottom_toBottomOf="parent"

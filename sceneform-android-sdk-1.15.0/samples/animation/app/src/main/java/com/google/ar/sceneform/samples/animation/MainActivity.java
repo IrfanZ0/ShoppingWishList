@@ -19,7 +19,7 @@ package com.google.ar.sceneform.samples.animation;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;

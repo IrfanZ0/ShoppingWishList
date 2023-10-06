@@ -18,10 +18,8 @@
     <string name="password_hint">Please enter your password</string>
     <string name="wishListName">Wish List</string>
     <string name="shopName">Shop</string>
-    <string name="title_activity_login">Login</string>
     <string name="login">Login</string>
     <string name="createNew">Create</string>
-    <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="register">Register</string>
     <string name="firstName">First Name:</string>
@@ -35,8 +33,6 @@
     <string name="shopAR">Shop AR</string>
     <string name="plane_finding">Finding AR Plane</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="fcvTag">Fragment Container View tag</string>
     <string name="merchandise_description">Description of Merchandise</string>
     <string name="purchase">Purchase</string>
 

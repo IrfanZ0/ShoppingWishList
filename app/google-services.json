@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "251620002656",
+    "project_id": "shopping-wish-list",
+    "storage_bucket": "shopping-wish-list.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251620002656:android:5f50453f25c63afb05ac05",
+        "android_client_info": {
+          "package_name": "com.tritongames.shoppingwishlist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBR9gZloONX60g16iP8DN-XA1hHC9UsS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

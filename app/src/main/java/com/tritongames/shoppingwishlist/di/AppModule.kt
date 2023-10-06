@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.tritongames.shoppingwishlist.data.models.bestbuy.BestBuyInterface
+import com.tritongames.shoppingwishlist.data.models.catalog.CatalogInterface
 import com.tritongames.shoppingwishlist.data.models.categories.ShoppingCategoriesInterface
 import com.tritongames.shoppingwishlist.data.models.contacts.ContactsDataClassItem
 import com.tritongames.shoppingwishlist.data.models.contacts.ContactsInterface
@@ -28,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
-const val BASE_URL = "https://irfanz0.github.io/"
+const val BASE_URL = "https://apis.androidparadise.site/"
 const val BEST_BUY_BASE_URL = "https://api.bestbuy.com"
 const val userPreferences = "user_preferences"
 
@@ -55,6 +56,16 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ShoppingCategoriesInterface::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideProductCatalogApi() : CatalogInterface {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(CatalogInterface::class.java)
     }
 
 

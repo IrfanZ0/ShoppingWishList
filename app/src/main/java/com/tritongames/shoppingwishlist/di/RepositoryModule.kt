@@ -2,6 +2,8 @@ package com.tritongames.shoppingwishlist.di
 
 import com.tritongames.shoppingwishlist.data.repository.bestbuy.BestBuyRepository
 import com.tritongames.shoppingwishlist.data.repository.bestbuy.BestBuyRepositoryImpl
+import com.tritongames.shoppingwishlist.data.repository.catalog.ProductsCatalogRepository
+import com.tritongames.shoppingwishlist.data.repository.catalog.ProductsCatalogRepositoryImpl
 import com.tritongames.shoppingwishlist.data.repository.category.ShopCategoryRepository
 import com.tritongames.shoppingwishlist.data.repository.category.ShopCategoryRepositoryImpl
 import com.tritongames.shoppingwishlist.data.repository.contacts.ContactsRepository
@@ -34,5 +36,9 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindBestBuyRepository(bestBuyRepo: BestBuyRepositoryImpl): BestBuyRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindProductsCatalogRespository(prodRepo: ProductsCatalogRepositoryImpl): ProductsCatalogRepository
 
 }

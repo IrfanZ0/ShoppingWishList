@@ -4,7 +4,8 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'org.jetbrains.kotlin.android'
-
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'
@@ -26,6 +27,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
+
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         Properties properties = new Properties()
@@ -38,6 +41,10 @@ android {
 
     buildFeatures {
         viewBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
 
     buildTypes {
@@ -58,6 +65,7 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
+    buildToolsVersion '33.0.2'
 
 }
 
@@ -66,15 +74,14 @@ hilt {
 }
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.11.0-beta02'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     //Annotation
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
     implementation 'androidx.privacysandbox.tools:tools-core:1.0.0-alpha06'
 
     //Junit 4
@@ -97,13 +104,12 @@ dependencies {
     // Activity KTX for viewModels()
     implementation "androidx.activity:activity-ktx:1.7.2"
 
-    // Architectural Components
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
 
 
     // Retrofit
@@ -116,14 +122,22 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 
     // Coroutine Lifecycle Scopes
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
 
     //Coroutine testing
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
 
     // Import the Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:32.2.2')
+    implementation(platform('com.google.firebase:firebase-bom:32.3.1'))
+
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // See https://firebase.google.com/docs/android/setup#available-libraries
+    // For example, add the dependencies for Firebase Authentication and Cloud Firestore
+    implementation('com.google.firebase:firebase-auth-ktx:22.1.2')
+    implementation('com.google.firebase:firebase-firestore-ktx:24.8.1')
 
     // For instrumented tests.
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.47'
@@ -131,13 +145,6 @@ dependencies {
             kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.47'
     // ...with Java.
     androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.47'
-
-    // When using the BoM, don't specify versions in Firebase dependencies
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.3.0'
-
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
 
     // Google Maps for Android
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
@@ -166,8 +173,52 @@ dependencies {
   // Volley
     implementation 'com.android.volley:volley:1.2.1'
 
+  //Multidex
+    implementation 'androidx.multidex:multidex:2.0.0'
 
+    // Compose
+    def composeBom = platform('androidx.compose:compose-bom:2023.01.00')
+    implementation composeBom
+    androidTestImplementation composeBom
 
+    // Choose one of the following:
+    // Material Design 3
+    implementation 'androidx.compose.material3:material3'
+    // or Material Design 2
+    implementation 'androidx.compose.material:material'
+    // or skip Material Design and build directly on top of foundational components
+    implementation 'androidx.compose.foundation:foundation'
+    // or only import the main APIs for the underlying toolkit systems,
+    // such as input and measurement/layout
+    implementation 'androidx.compose.ui:ui'
+
+    // Android Studio Preview support
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    // Optional - Included automatically by material, only add when you need
+    // the icons but not the material library (e.g. when using Material3 or a
+    // custom design system based on Foundation)
+    implementation 'androidx.compose.material:material-icons-core'
+    // Optional - Add full set of material icons
+    implementation 'androidx.compose.material:material-icons-extended'
+    // Optional - Add window size utils
+    implementation 'androidx.compose.material3:material3-window-size-class'
+
+    // Optional - Integration with activities
+    implementation 'androidx.activity:activity-compose:1.7.2'
+    // Optional - Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2'
+    // Optional - Integration with LiveData
+    implementation 'androidx.compose.runtime:runtime-livedata'
+    // Optional - Integration with RxJava
+    implementation 'androidx.compose.runtime:runtime-rxjava2'
 }
+
+
 
 
