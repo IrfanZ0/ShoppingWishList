@@ -1,24 +1,34 @@
 package com.tritongames.shoppingwishlist.presentation
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.tritongames.shoppingwishlist.R
+import com.tritongames.shoppingwishlist.data.viewmodels.ShoppingDataViewModel
+import javax.inject.Inject
 
-class PurchaseAdapter(checkoutActivity: CheckoutActivity) : RecyclerView.Adapter<PurchaseAdapter.RecyclerViewHolder>() {
-    class RecyclerViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
+class PurchaseAdapter @Inject constructor(private val shopVM : ShoppingDataViewModel, private val productInfo: String) : RecyclerView.Adapter<PurchaseAdapter.RecyclerViewHolder>() {
+    class RecyclerViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val prodNameTV = itemView.findViewById<TextView>(R.id.productNameText)
+        val productPriceTV = itemView.findViewById<TextView>(R.id.productPriceText)
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        TODO("Not yet implemented")
+       val view : View = LayoutInflater.from(parent.context).inflate(R.layout.purchase_layout, parent)
+        return RecyclerViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+       return shopVM.getProductCheckoutList(productInfo).count()
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.prodNameTV.text = shopVM.getProductCheckoutList(productInfo)[position]
+        holder.productPriceTV.text = shopVM.getProductCheckoutList(productInfo)[position]
     }
+
 
 }

@@ -1,50 +1,68 @@
 package com.tritongames.shoppingwishlist.presentation
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.content.pm.PackageManager
+import android.location.Location
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.PopupWindow
 import android.widget.SimpleCursorAdapter
 import android.widget.Spinner
 import android.widget.SpinnerAdapter
 import android.widget.StackView
+import android.widget.Switch
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.FragmentContainerView
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.PlaceLikelihood
+import com.google.android.libraries.places.api.model.PlaceTypes
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.tritongames.shoppingwishlist.BuildConfig
 import com.tritongames.shoppingwishlist.R
 import com.tritongames.shoppingwishlist.data.models.ShoppingData.Companion.context
 import com.tritongames.shoppingwishlist.data.viewmodels.BestBuyViewModel
 import com.tritongames.shoppingwishlist.data.viewmodels.ShoppingDataViewModel
 import com.tritongames.shoppingwishlist.databinding.SpinnerWishListBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import java.util.Locale
 
 @AndroidEntryPoint
 class WishList : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
 
     private lateinit var spinnerWishListBinding : SpinnerWishListBinding
-    private lateinit var cat1ARButton: Button
-    private lateinit var  cat2ARButton: Button
-    private lateinit var cat3ARButton: Button
+    private lateinit var cartAddButton: Button
     lateinit var it: ArrayAdapter<CharSequence>
-    var spin1: Spinner? = null
-    var spin2: Spinner? = null
-    var spin3: Spinner? = null
     var s: Shop? = null
-    var rID1 = 0
-    var rID2 = 0
     var rID3 = 0
     var resID1 = 0
     var resID2 = 0
@@ -66,1080 +84,149 @@ class WishList : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
     lateinit var data: Array<String>
     var sv: StackView? = null
     var s1adapter: ArrayAdapter<CharSequence>? = null
-    var s2adapter: ArrayAdapter<CharSequence>? = null
-    var s3adapter: ArrayAdapter<CharSequence>? = null
+    private lateinit var cat1BadgeText : TextView
+    private lateinit var itemSelected : String
+    private lateinit var purchaseFCV: FragmentContainerView
+    private lateinit var purchasesRV: RecyclerView
+    private var lastKnownLocation: Location? = null
+    private var likelyPlaceNames: Array<String?> = arrayOfNulls(0)
+    private var likelyPlaceAddresses: Array<String?> = arrayOfNulls(0)
+    private var likelyPlaceAttributions: Array<List<*>?> = arrayOfNulls(0)
+    private var likelyPlaceLatLngs: Array<LatLng?> = arrayOfNulls(0)
+    private lateinit var switchButton : Switch
+    private lateinit var popUp : PopupWindow
+    private lateinit var layoutParent : ConstraintLayout
+    private var currentLocation : Location? = null
+    private lateinit var purchaseButton: Button
+    // The entry point to the Places API.
+    private lateinit var placesClient: PlacesClient
+
+
+    // The entry point to the Fused Location Provider.
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    val productList : MutableList<String> = mutableListOf()
+
+
+
+    // A default location (Sydney, Australia) and default zoom to use when location permission is
+    // not granted.
+    private val defaultLocation = LatLng(-33.8523341, 151.2106085)
+    var locationPermissionGranted = false
     val shoppingVM: ShoppingDataViewModel by viewModels()
     val bestBuyVM: BestBuyViewModel by viewModels()
+    val shopDataViewModel: ShoppingDataViewModel by viewModels()
+
 
 
     init {
         contextWish = context
     }
 
+    @SuppressLint("InflateParams")
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         spinnerWishListBinding = SpinnerWishListBinding.inflate(layoutInflater)
         setContentView(spinnerWishListBinding.root)
-        // actionBar!!.setDisplayHomeAsUpEnabled(true)
-       contextWish = applicationContext
+        // Selecting and purchasing items
+        contextWish = applicationContext
 
 
-        spin1 = spinnerWishListBinding.category1
-        spin2 = spinnerWishListBinding.category2
-        spin3 = spinnerWishListBinding.category3
+        productList.add("Levis")
+        productList.add("Playstation 5")
+        productList.add("Pizza")
 
-        cat1ARButton = spinnerWishListBinding.cat1AR
+        val arrayAdapter : ArrayAdapter<String> = ArrayAdapter<String>(
+            this@WishList,
+            android.R.layout.simple_spinner_item,
+            productList
+        )
 
-        cat1ARButton.setOnClickListener(this)
+        // Add to Cart Button
+        cartAddButton = spinnerWishListBinding.addToCart
+        cartAddButton.setOnClickListener(this)
+        cat1BadgeText = spinnerWishListBinding.cartBadge
+        purchaseFCV = spinnerWishListBinding.mapFCV
 
-        cat2ARButton = spinnerWishListBinding.cat2AR
 
-        cat2ARButton.setOnClickListener(this)
 
-        cat3ARButton = spinnerWishListBinding.cat3AR
+        purchasesRV = spinnerWishListBinding.purchasesRV
 
-        cat3ARButton.setOnClickListener(this)
+        // Google Maps
+       Places.initialize(applicationContext, BuildConfig.GOOGLE_MAPS_API_KEY)
+        placesClient = Places.createClient(this)
 
-        val mapFragment: SupportMapFragment = supportFragmentManager.findFragmentById(R.id.mapFCV) as SupportMapFragment
+        // Construct a FusedLocationProviderClient.
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val mapFragment: SupportMapFragment =
+            supportFragmentManager.findFragmentById(R.id.mapFCV) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        val shopDataViewModel: ShoppingDataViewModel by viewModels()
+        layoutParent = findViewById(R.id.layoutParent)
+
+
+       switchButton = spinnerWishListBinding.autoDetectSwitch
+
+
+
+        // Purchase Page
+        purchaseButton = spinnerWishListBinding.purchaseButton
+        purchaseButton.setOnClickListener(this)
+
+
+
         // collecting drawables from the three ImageViews in com.tritongames.shoppingwishlist.presentation.Shop class and using that to set text to individual EditTexts.
-        lifecycleScope.launch(){
-            shopDataViewModel.shopDataLoad.collect{ event ->
-                when (event){
-                    is ShoppingDataViewModel.ShopDataLoadEvent.Success ->{
+       /* lifecycleScope.launch() {
+            shopDataViewModel.shopDataLoad.collect { event ->
+                when (event) {
+                    is ShoppingDataViewModel.ShopDataLoadEvent.Success -> {
                         val d1: Int? = Shop.dImage1
                         setAdapter(spin1, d1)
-                        val d2: Int? = Shop.dImage2
-                        setAdapter(spin2, d2)
-                        val d3: Int? = Shop.dImage3
-                        setAdapter(spin3, d3)
+
 
                     }
-                    is ShoppingDataViewModel.ShopDataLoadEvent.Error ->{
+
+                    is ShoppingDataViewModel.ShopDataLoadEvent.Error -> {
 
                     }
+
                     else -> Unit
                 }
             }
 
         }
 
-//       spin1?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            @Override
-//            override fun onItemSelected(av: AdapterView<*>?, v: View?,
-//                                        pos: Int, posID: Long) {
-//
-//                val selectedItem: String = spin1?.adapter?.getItem(0).toString()
-//                if (selectedItem.contains("Levis")) {
-//                    selectedItem.toLowerCase(Locale.US)
-//                    val uriString = "http://www.macys.com/m/campaign/levis/levis?cm_mmc=VanityUrl-_-levis-_-n-_-n"
-//                    val uriclothes: Uri = Uri.parse(uriString)
-//                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-//                    startActivity(intentclothes)
-//                } else if (selectedItem.contains("Dockers")) {
-//                    val uriString = "http://www1.macys.com/shop/search?keyword=dockers#cm_pv=slp"
-//                    val uriclothes: Uri = Uri.parse(uriString)
-//                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-//                    startActivity(intentclothes)
-//                } else if (selectedItem.contains("Calvin Klein")) {
-//                    val uriString = "http://www1.macys.com/shop/search?keyword=calvin+klein#cm_pv=slp"
-//                    val uriclothes: Uri = Uri.parse(uriString)
-//                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-//                    startActivity(intentclothes)
-//                } else if (selectedItem.contains("Guess")) {
-//                    val uriString = "http://www1.macys.com/shop/search?keyword=guess#cm_pv=slp"
-//                    val uriclothes: Uri = Uri.parse(uriString)
-//                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-//                    startActivity(intentclothes)
-//                } else if (selectedItem.contains("Lucky Brand")) {
-//                    val uriString = "http://www1.macys.com/shop/search?keyword=lucky+brand#cm_pv=slp"
-//                    val uriclothes: Uri = Uri.parse(uriString)
-//                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-//                    startActivity(intentclothes)
-//                } else if (selectedItem.contains("Nike")) {
-//                    val uriString = "http://www1.macys.com/shop/search?keyword=nike#cm_pv=slp"
-//                    val uriclothes: Uri = Uri.parse(uriString)
-//                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-//                    startActivity(intentclothes)
-//                } else if (selectedItem.contains("Carter")) {
-//                    val uriString = "http://www1.macys.com/shop/search?keyword=carter%27s#cm_pv=slp"
-//                    val uriclothes: Uri = Uri.parse(uriString)
-//                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-//                    startActivity(intentclothes)
-//                } else if (selectedItem.contains("Tommy Hilfiger")) {
-//                    val uriString = "http://www1.macys.com/shop/search?keyword=tommy+hilfiger#cm_pv=slp"
-//                    val uriclothes: Uri = Uri.parse(uriString)
-//                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-//                    startActivity(intentclothes)
-//                } else if (selectedItem.contains("Sony")) {
-//                    val uriString = "http://www.bestbuy.com/site/Brands/Sony-Store/cat15063.c?id=cat15063&pageType=REDIRECT&issolr=1&searchterm=Sony"
-//                    val uricomputers: Uri = Uri.parse(uriString)
-//                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-//                    startActivity(intentcomputers)
-//                } else if (selectedItem.contains("MacBook Air")) {
-//                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=MacBook+Air"
-//                    val uricomputers: Uri = Uri.parse(uriString)
-//                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-//                    startActivity(intentcomputers)
-//                } else if (selectedItem.contains("Apple")) {
-//                    val uriString = "http://www.bestbuy.com/site/Brands/Apple/pcmcat128500050005.c?id=pcmcat128500050005&pageType=REDIRECT&issolr=1&searchterm=Apple"
-//                    val uricomputers: Uri = Uri.parse(uriString)
-//                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-//                    startActivity(intentcomputers)
-//                } else if (selectedItem.contains("Samsung")) {
-//                    val uriString = "http://www.bestbuy.com/site/Brands/Samsung/pcmcat140800050115.c?id=pcmcat140800050115&pageType=REDIRECT&issolr=1&searchterm=Samsung"
-//                    val uricomputers: Uri = Uri.parse(uriString)
-//                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-//                    startActivity(intentcomputers)
-//                } else if (selectedItem.contains("Acer")) {
-//                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Acer"
-//                    val uricomputers: Uri = Uri.parse(uriString)
-//                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-//                    startActivity(intentcomputers)
-//                } else if (selectedItem.contains("Asus")) {
-//                    val uriString = "http://www.bestbuy.com/site/Brands/Asus/pcmcat190000050006.c?id=pcmcat190000050006&pageType=REDIRECT&issolr=1&searchterm=Asus"
-//                    val uricomputers: Uri = Uri.parse(uriString)
-//                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-//                    startActivity(intentcomputers)
-//                } else if (selectedItem.contains("Lenovo")) {
-//                    val uriString = "http://www.bestbuy.com/site/Brands/Lenovo/pcmcat230600050000.c?id=pcmcat230600050000&pageType=REDIRECT&issolr=1&searchterm=Lenovo"
-//                    val uricomputers: Uri = Uri.parse(uriString)
-//                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-//                    startActivity(intentcomputers)
-//                } else if (selectedItem.contains("Toshiba")) {
-//                    val uriString = "http://www.bestbuy.com/site/Brands/Toshiba/pcmcat136800050058.c?id=pcmcat136800050058&pageType=REDIRECT&issolr=1&searchterm=Toshiba"
-//                    val uricomputers: Uri = Uri.parse(uriString)
-//                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-//                    startActivity(intentcomputers)
-//                } else if (selectedItem.contains("Papa Johns")) {
-//                    val uriString = "http://www.papajohns.com/index.html"
-//                    val uridining: Uri = Uri.parse(uriString)
-//                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-//                    startActivity(intentdining)
-//                } else if (selectedItem.contains("BJs Restaurants")) {
-//                    val uriString = "http://www.bjsrestaurants.com/"
-//                    val uridining: Uri = Uri.parse(uriString)
-//                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-//                    startActivity(intentdining)
-//                } else if (selectedItem.contains("Dennys")) {
-//                    val uriString = "http://www.dennys.com/"
-//                    val uridining: Uri = Uri.parse(uriString)
-//                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-//                    startActivity(intentdining)
-//                } else if (selectedItem.contains("California Sushi Roll")) {
-//                    val uriString = "http://www.california-sushi-roll.com/"
-//                    val uridining: Uri = Uri.parse(uriString)
-//                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-//                    startActivity(intentdining)
-//                } else if (selectedItem.contains("Taco Bell")) {
-//                    val uriString = "www.tacobell.com/"
-//                    val uridining: Uri = Uri.parse(uriString)
-//                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-//                    startActivity(intentdining)
-//                } else if (selectedItem.contains("The Cheesecake Factory")) {
-//                    val uriString = "http://www.thecheesecakefactory.com/"
-//                    val uridining: Uri = Uri.parse(uriString)
-//                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-//                    startActivity(intentdining)
-//                } else if (selectedItem.contains("Pizza Hut")) {
-//                    val uriString = "http://www.pizzahut.com/"
-//                    val uridining: Uri = Uri.parse(uriString)
-//                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-//                    startActivity(intentdining)
-//                } else if (selectedItem.contains("Carls Jr")) {
-//                    val uriString = "http://www.carlsjr.com/"
-//                    val uridining: Uri = Uri.parse(uriString)
-//                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-//                    startActivity(intentdining)
-//                } else if (selectedItem.contains("eBooks")) {
-//                    val uriString = "http://www.ebooks.com/subjects/Romance/"
-//                    val uriebooks: Uri = Uri.parse(uriString)
-//                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-//                    startActivity(intentebooks)
-//                } else if (selectedItem.contains("eBooks")) {
-//                    val uriString = "http://www.ebooks.com/subjects/Science-Fiction/"
-//                    val uriebooks: Uri = Uri.parse(uriString)
-//                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-//                    startActivity(intentebooks)
-//                } else if (selectedItem.contains("eBooks")) {
-//                    val uriString = "http://www.ebooks.com/subjects/Technology/"
-//                    val uriebooks: Uri = Uri.parse(uriString)
-//                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-//                    startActivity(intentebooks)
-//                } else if (selectedItem.contains("eBooks")) {
-//                    val uriString = "http://www.ebooks.com/subjects/Business/"
-//                    val uriebooks: Uri = Uri.parse(uriString)
-//                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-//                    startActivity(intentebooks)
-//                } else if (selectedItem.contains("eBooks")) {
-//                    val uriString = "http://www.ebooks.com/subjects/Health/"
-//                    val uriebooks: Uri = Uri.parse(uriString)
-//                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-//                    startActivity(intentebooks)
-//                } else if (selectedItem.contains("eBooks")) {
-//                    val uriString = "http://www.ebooks.com/subjects/History/"
-//                    val uriebooks: Uri = Uri.parse(uriString)
-//                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-//                    startActivity(intentebooks)
-//                } else if (selectedItem.contains("eBooks")) {
-//                    val uriString = "http://www.ebooks.com/subjects/Mystery/"
-//                    val uriebooks: Uri = Uri.parse(uriString)
-//                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-//                    startActivity(intentebooks)
-//                } else if (selectedItem.contains("eBooks")) {
-//                    val uriString = "http://www.ebooks.com/subjects/Childrens-young-adult-fiction/"
-//                    val uriebooks: Uri = Uri.parse(uriString)
-//                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-//                    startActivity(intentebooks)
-//                } else if (selectedItem.contains("Movies")) {
-//                    val uriString = "https://www.amctheatres.com/"
-//                    val urimovies: Uri = Uri.parse(uriString)
-//                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-//                    startActivity(intentmovies)
-//                } else if (selectedItem.contains("Movies")) {
-//                    val uriString = "https://www.amctheatres.com/"
-//                    val urimovies: Uri = Uri.parse(uriString)
-//                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-//                    startActivity(intentmovies)
-//                } else if (selectedItem.contains("") && parentItem.contains("Movies")) {
-//                    val uriString = "https://www.amctheatres.com/"
-//                    val urimovies: Uri = Uri.parse(uriString)
-//                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-//                    startActivity(intentmovies)
-//                } else if (selectedItem.contains("Comedy") && parentItem.contains("Movies")) {
-//                    val uriString = "https://www.amctheatres.com/"
-//                    val urimovies: Uri = Uri.parse(uriString)
-//                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-//                    startActivity(intentmovies)
-//                } else if (selectedItem.contains("Romantic") && parentItem.contains("Movies")) {
-//                    val uriString = "https://www.amctheatres.com/"
-//                    val urimovies: Uri = Uri.parse(uriString)
-//                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-//                    startActivity(intentmovies)
-//                } else if (selectedItem.contains("Children's") && parentItem.contains("Movies")) {
-//                    val uriString = "https://www.amctheatres.com/"
-//                    val urimovies: Uri = Uri.parse(uriString)
-//                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-//                    startActivity(intentmovies)
-//                } else if (selectedItem.contains("Family") && parentItem.contains("Movies")) {
-//                    val uriString = "http://www.amctheatres.com/"
-//                    val urimovies: Uri = Uri.parse(uriString)
-//                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-//                    startActivity(intentmovies)
-//                } else if (selectedItem.contains("Action") && parentItem.contains("Movies")) {
-//                    val uriString = "https://www.amctheatres.com/"
-//                    val urimovies: Uri = Uri.parse(uriString)
-//                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-//                    startActivity(intentmovies)
-//                } else if (selectedItem.contains("Cat")) {
-//                    val uriString = "http://www.petco.com/Cat-Home.aspx"
-//                    val uripets: Uri = Uri.parse(uriString)
-//                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-//                    startActivity(intentpets)
-//                } else if (selectedItem.contains("Dog")) {
-//                    val uriString = "http://www.petco.com/Dog-Home.aspx"
-//                    val uripets: Uri = Uri.parse(uriString)
-//                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-//                    startActivity(intentpets)
-//                } else if (selectedItem.contains("Bird")) {
-//                    val uriString = "http://www.petco.com/Bird-Home.aspx"
-//                    val uripets: Uri = Uri.parse(uriString)
-//                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-//                    startActivity(intentpets)
-//                } else if (selectedItem.contains("Fish")) {
-//                    val uriString = "http://www.petco.com/Fish-Home.aspx"
-//                    val uripets: Uri = Uri.parse(uriString)
-//                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-//                    startActivity(intentpets)
-//                } else if (selectedItem.contains("Rabbits")) {
-//                    val uriString = "http://www.petco.com/Rabbits-Home.aspx?CoreSearch=Rabbit"
-//                    val uripets: Uri = Uri.parse(uriString)
-//                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-//                    startActivity(intentpets)
-//                } else if (selectedItem.contains("Hamsters")) {
-//                    val uriString = "http://www.petco.com/HamstersHome.aspx?CoreSearch=Hamsters"
-//                    val uripets: Uri = Uri.parse(uriString)
-//                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-//                    startActivity(intentpets)
-//                } else if (selectedItem.contains("Turtles")) {
-//                    val uriString = "http://www.petco.com/Turtles-Home.aspx?CoreSearch=Turtles"
-//                    val uripets: Uri = Uri.parse(uriString)
-//                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-//                    startActivity(intentpets)
-//                } else if (selectedItem.contains("Snakes")) {
-//                    val uriString = "http://www.petco.com/Snakes-Home.aspx?CoreSearch=Snakes"
-//                    val uripets: Uri = Uri.parse(uriString)
-//                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-//                    startActivity(intentpets)
-//                } else if (selectedItem.contains("Universal Studios")) {
-//                    val uriString = "http://www.universalstudios.com/"
-//                    val uritravel: Uri = Uri.parse(uriString)
-//                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-//                    startActivity(intenttravel)
-//                } else if (selectedItem.contains("Magic Mountain")) {
-//                    val uriString = "https://www.sixflags.com"
-//                    val uritravel: Uri = Uri.parse(uriString)
-//                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-//                    startActivity(intenttravel)
-//                } else if (selectedItem.contains("Sea World")) {
-//                    val uriString = "https://www.seaworld.com/"
-//                    val uritravel: Uri = Uri.parse(uriString)
-//                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-//                    startActivity(intenttravel)
-//                } else if (selectedItem.contains("Legoland")) {
-//                    val uriString = "https://www.legoland.com/"
-//                    val uritravel: Uri = Uri.parse(uriString)
-//                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-//                    startActivity(intenttravel)
-//                } else if (selectedItem.contains("Disneyland")) {
-//                    val uriString = "https://www.disneyland.com/"
-//                    val uritravel: Uri = Uri.parse(uriString)
-//                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-//                    startActivity(intenttravel)
-//                } else if (selectedItem.contains("San Diego Wild Animal Park")) {
-//                    val uriString = "http://www.sdzsafaripark.org/"
-//                    val uritravel: Uri = Uri.parse(uriString)
-//                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-//                    startActivity(intenttravel)
-//                } else if (selectedItem.contains("Disney California")) {
-//                    val uriString = "http://disneyland.disney.go.com/destinations/disney-california-adventure/"
-//                    val uritravel: Uri = Uri.parse(uriString)
-//                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-//                    startActivity(intenttravel)
-//                } else if (selectedItem.contains("Hurricane Harbor")) {
-//                    val uriString = "https://www.sixflags.com/hurricaneharborla"
-//                    val uritravel: Uri = Uri.parse(uriString)
-//                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-//                    startActivity(intenttravel)
-//                } else if (selectedItem.contains("Playstation 4")) {
-//                    val uriString = "http://www.bestbuy.com/site/Video-Games/PlayStation-4-PS4/pcmcat295700050012.c?id=pcmcat295700050012&pageType=REDIRECT&issolr=1&searchterm=Playstation%204"
-//                    val urivideogames: Uri = Uri.parse(uriString)
-//                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-//                    startActivity(intentvideogames)
-//                } else if (selectedItem.contains("XBOX")) {
-//                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=XBOX"
-//                    val urivideogames: Uri = Uri.parse(uriString)
-//                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-//                    startActivity(intentvideogames)
-//                } else if (selectedItem.contains("Nintendo Wii U")) {
-//                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Nintendo+Wii+U"
-//                    val urivideogames: Uri = Uri.parse(uriString)
-//                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-//                    startActivity(intentvideogames)
-//                } else if (selectedItem.contains("Playstation 3")) {
-//                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Playstation+3"
-//                    val urivideogames: Uri = Uri.parse(uriString)
-//                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-//                    startActivity(intentvideogames)
-//                } else if (selectedItem.contains("Nintendo Wii")) {
-//                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Nintendo+Wii"
-//                    val urivideogames: Uri = Uri.parse(uriString)
-//                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-//                    startActivity(intentvideogames)
-//                } else if (selectedItem.contains("Android")) {
-//                    val uriString = "https://play.google.com/store"
-//                    val urivideogames: Uri = Uri.parse(uriString)
-//                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-//                    startActivity(intentvideogames)
-//                } else if (selectedItem.contains("iPhone")) {
-//                    val uriString = "http://store.apple.com/us"
-//                    val urivideogames: Uri = Uri.parse(uriString)
-//                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-//                    startActivity(intentvideogames)
-//                } else if (selectedItem.contains("PC")) {
-//                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=PC+games"
-//                    val urivideogames: Uri = Uri.parse(uriString)
-//                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-//                    startActivity(intentvideogames)
-//                } else {
-//                }*/
-//            }
-//
-//            @Override
-//            override fun onNothingSelected(av: AdapterView<*>?) {
-//
-//            }
-//        }
 
-        spin2?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+        spin1?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             @Override
-            override fun onItemSelected(av: AdapterView<*>?, v: View?,
-                                        pos: Int, posID: Long) {
+            override fun onItemSelected(
+                av: AdapterView<*>?, v: View?,
+                pos: Int, posID: Long
+            ) {
+                val selectedItem: String = spin1?.adapter?.getItem(pos).toString()
+               // setItem(selectedItem)
 
-                val selectedItem: String = spin2!!.selectedItem.toString()
-                val parentItem: String = spin2!!.adapter.getItem(0).toString()
-                if (selectedItem.contains("Levis")) {
-                    selectedItem.lowercase(Locale.US)
-                    val uriString = "http://www.macys.com/m/campaign/levis/levis?cm_mmc=VanityUrl-_-levis-_-n-_-n"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Dockers")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=dockers#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Calvin Klein")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=calvin+klein#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Guess")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=guess#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Lucky Brand")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=lucky+brand#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Nike")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=nike#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Carter")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=carter%27s#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Tommy Hilfiger")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=tommy+hilfiger#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Sony")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Sony-Store/cat15063.c?id=cat15063&pageType=REDIRECT&issolr=1&searchterm=Sony"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("MacBook Air")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=macbook+air"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Apple")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Apple/pcmcat128500050005.c?id=pcmcat128500050005&pageType=REDIRECT&issolr=1&searchterm=Apple"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Samsung")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Samsung/pcmcat140800050115.c?id=pcmcat140800050115&pageType=REDIRECT&issolr=1&searchterm=Samsung"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Acer")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Acer"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Asus")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Asus/pcmcat190000050006.c?id=pcmcat190000050006&pageType=REDIRECT&issolr=1&searchterm=Asus"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Lenovo")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Lenovo/pcmcat230600050000.c?id=pcmcat230600050000&pageType=REDIRECT&issolr=1&searchterm=Lenovo"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Toshiba")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Toshiba/pcmcat136800050058.c?id=pcmcat136800050058&pageType=REDIRECT&issolr=1&searchterm=Toshiba"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Papa Johns")) {
-                    val uriString = "http://www.papajohns.com/index.html"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("BJs Restaurants")) {
-                    val uriString = "http://www.bjsrestaurants.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Dennys")) {
-                    val uriString = "http://www.dennys.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("California Sushi Roll")) {
-                    val uriString = "http://www.california-sushi-roll.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Taco Bell")) {
-                    val uriString = "www.tacobell.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("The Cheesecake Factory")) {
-                    val uriString = "http://www.thecheesecakefactory.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Pizza Hut")) {
-                    val uriString = "http://www.pizzahut.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Carls Jr")) {
-                    val uriString = "http://www.carlsjr.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Romance") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Romance/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Science Fiction") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Science-Fiction/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Technology") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Technology/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Business") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Business/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Health") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Health/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("History") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/History/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Mystery") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Mystery/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Childrens") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Childrens-young-adult-fiction/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Science Fiction") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Mystery") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Horror") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Comedy") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Romantic") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Children's") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Family") && parentItem.contains("Movies")) {
-                    val uriString = "http://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Action") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Cat")) {
-                    val uriString = "http://www.petco.com/Cat-Home.aspx"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Dog")) {
-                    val uriString = "http://www.petco.com/Dog-Home.aspx"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Bird")) {
-                    val uriString = "http://www.petco.com/Bird-Home.aspx"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Fish")) {
-                    val uriString = "http://www.petco.com/Fish-Home.aspx"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Rabbits")) {
-                    val uriString = "http://www.petco.com/Rabbits-Home.aspx?CoreSearch=Rabbit"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Hamsters")) {
-                    val uriString = "http://www.petco.com/HamstersHome.aspx?CoreSearch=Hamsters"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Turtles")) {
-                    val uriString = "http://www.petco.com/Turtles-Home.aspx?CoreSearch=Turtles"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Snakes")) {
-                    val uriString = "http://www.petco.com/Snakes-Home.aspx?CoreSearch=Snakes"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Universal Studios")) {
-                    val uriString = "http://www.universalstudios.com/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Magic Mountain")) {
-                    val uriString = "https://www.sixflags.com"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Sea World")) {
-                    val uriString = "https://www.seaworld.com/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Legoland")) {
-                    val uriString = "https://www.legoland.com/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Disneyland")) {
-                    val uriString = "https://www.disneyland.com/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("San Diego Wild Animal Park")) {
-                    val uriString = "http://www.sdzsafaripark.org/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Disney California")) {
-                    val uriString = "http://disneyland.disney.go.com/destinations/disney-california-adventure/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Hurricane Harbor")) {
-                    val uriString = "https://www.sixflags.com/hurricaneharborla"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Playstation 4")) {
-                    val uriString = "http://www.bestbuy.com/site/Video-Games/PlayStation-4-PS4/pcmcat295700050012.c?id=pcmcat295700050012&pageType=REDIRECT&issolr=1&searchterm=Playstation%204"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("XBOX")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=XBOX"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("Nintendo Wii U")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Nintendo+Wii+U"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("Playstation 3")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Playstation+3"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("Nintendo Wii")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Nintendo+Wii"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("Android")) {
-                    val uriString = "https://play.google.com/store"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("iPhone")) {
-                    val uriString = "http://store.apple.com/us"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("PC")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=PC+games"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else {
-                }
             }
 
             @Override
             override fun onNothingSelected(av: AdapterView<*>?) {
-
+              // setItem(null)
             }
-        }
+        }*/
+    }
 
-        spin3?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            @Override
-            override fun onItemSelected(av: AdapterView<*>?, v: View?,
-                                        pos: Int, posID: Long) {
-
-                val selectedItem: String = spin3!!.selectedItem.toString()
-                val parentItem: String = spin3!!.adapter.getItem(0).toString()
-                if (selectedItem.contains("Levis")) {
-                    selectedItem.lowercase(Locale.US)
-                    val uriString = "http://www.macys.com/m/campaign/levis/levis?cm_mmc=VanityUrl-_-levis-_-n-_-n"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Dockers")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=dockers#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Calvin Klein")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=calvin+klein#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Guess")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=guess#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Lucky Brand")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=lucky+brand#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Nike")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=nike#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Carter")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=carter%27s#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Tommy Hilfiger")) {
-                    val uriString = "http://www1.macys.com/shop/search?keyword=tommy+hilfiger#cm_pv=slp"
-                    val uriclothes: Uri = Uri.parse(uriString)
-                    val intentclothes = Intent(Intent.ACTION_VIEW, uriclothes)
-                    startActivity(intentclothes)
-                } else if (selectedItem.contains("Sony")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Sony-Store/cat15063.c?id=cat15063&pageType=REDIRECT&issolr=1&searchterm=Sony"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("MacBook Air")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=MacBook+Air"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Apple")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Apple/pcmcat128500050005.c?id=pcmcat128500050005&pageType=REDIRECT&issolr=1&searchterm=Apple"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Samsung")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Samsung/pcmcat140800050115.c?id=pcmcat140800050115&pageType=REDIRECT&issolr=1&searchterm=Samsung"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Acer")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Acer"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Asus")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Asus/pcmcat190000050006.c?id=pcmcat190000050006&pageType=REDIRECT&issolr=1&searchterm=Asus"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Lenovo")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Lenovo/pcmcat230600050000.c?id=pcmcat230600050000&pageType=REDIRECT&issolr=1&searchterm=Lenovo"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Toshiba")) {
-                    val uriString = "http://www.bestbuy.com/site/Brands/Toshiba/pcmcat136800050058.c?id=pcmcat136800050058&pageType=REDIRECT&issolr=1&searchterm=Toshiba"
-                    val uricomputers: Uri = Uri.parse(uriString)
-                    val intentcomputers = Intent(Intent.ACTION_VIEW, uricomputers)
-                    startActivity(intentcomputers)
-                } else if (selectedItem.contains("Papa Johns")) {
-                    val uriString = "http://www.papajohns.com/index.html"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("BJs Restaurants")) {
-                    val uriString = "http://www.bjsrestaurants.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Dennys")) {
-                    val uriString = "http://www.dennys.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("California Sushi Roll")) {
-                    val uriString = "http://www.california-sushi-roll.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Taco Bell")) {
-                    val uriString = "www.tacobell.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("The Cheesecake Factory")) {
-                    val uriString = "http://www.thecheesecakefactory.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Pizza Hut")) {
-                    val uriString = "http://www.pizzahut.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Carls Jr")) {
-                    val uriString = "http://www.carlsjr.com/"
-                    val uridining: Uri = Uri.parse(uriString)
-                    val intentdining = Intent(Intent.ACTION_VIEW, uridining)
-                    startActivity(intentdining)
-                } else if (selectedItem.contains("Romance") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Romance/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Science Fiction") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Science-Fiction/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Technology") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Technology/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Business") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Business/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Health") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Health/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("History") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/History/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Mystery") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Mystery/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Childrens") && parentItem.contains("eBooks")) {
-                    val uriString = "http://www.ebooks.com/subjects/Childrens-young-adult-fiction/"
-                    val uriebooks: Uri = Uri.parse(uriString)
-                    val intentebooks = Intent(Intent.ACTION_VIEW, uriebooks)
-                    startActivity(intentebooks)
-                } else if (selectedItem.contains("Science Fiction") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Mystery") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Horror") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Comedy") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Romantic") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Children's") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Family") && parentItem.contains("Movies")) {
-                    val uriString = "http://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Action") && parentItem.contains("Movies")) {
-                    val uriString = "https://www.amctheatres.com/"
-                    val urimovies: Uri = Uri.parse(uriString)
-                    val intentmovies = Intent(Intent.ACTION_VIEW, urimovies)
-                    startActivity(intentmovies)
-                } else if (selectedItem.contains("Cat")) {
-                    val uriString = "http://www.petco.com/Cat-Home.aspx"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Dog")) {
-                    val uriString = "http://www.petco.com/Dog-Home.aspx"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Bird")) {
-                    val uriString = "http://www.petco.com/Bird-Home.aspx"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Fish")) {
-                    val uriString = "http://www.petco.com/Fish-Home.aspx"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Rabbits")) {
-                    val uriString = "http://www.petco.com/Rabbits-Home.aspx?CoreSearch=Rabbit"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Hamsters")) {
-                    val uriString = "http://www.petco.com/HamstersHome.aspx?CoreSearch=Hamsters"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Turtles")) {
-                    val uriString = "http://www.petco.com/Turtles-Home.aspx?CoreSearch=Turtles"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Snakes")) {
-                    val uriString = "http://www.petco.com/Snakes-Home.aspx?CoreSearch=Snakes"
-                    val uripets: Uri = Uri.parse(uriString)
-                    val intentpets = Intent(Intent.ACTION_VIEW, uripets)
-                    startActivity(intentpets)
-                } else if (selectedItem.contains("Universal Studios")) {
-                    val uriString = "http://www.universalstudios.com/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Magic Mountain")) {
-                    val uriString = "https://www.sixflags.com"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Sea World")) {
-                    val uriString = "https://www.seaworld.com/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Legoland")) {
-                    val uriString = "https://www.legoland.com/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Disneyland")) {
-                    val uriString = "https://www.disneyland.com/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("San Diego Wild Animal Park")) {
-                    val uriString = "http://www.sdzsafaripark.org/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Disney California")) {
-                    val uriString = "http://disneyland.disney.go.com/destinations/disney-california-adventure/"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Hurricane Harbor")) {
-                    val uriString = "https://www.sixflags.com/hurricaneharborla"
-                    val uritravel: Uri = Uri.parse(uriString)
-                    val intenttravel = Intent(Intent.ACTION_VIEW, uritravel)
-                    startActivity(intenttravel)
-                } else if (selectedItem.contains("Playstation 4")) {
-                    val uriString = "http://www.bestbuy.com/site/Video-Games/PlayStation-4-PS4/pcmcat295700050012.c?id=pcmcat295700050012&pageType=REDIRECT&issolr=1&searchterm=Playstation%204"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("XBOX")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=XBOX"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("Nintendo Wii U")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Nintendo+Wii+U"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("Playstation 3")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Playstation+3"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("Nintendo Wii")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=Nintendo+Wii"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("Android")) {
-                    val uriString = "https://play.google.com/store"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("iPhone")) {
-                    val uriString = "http://store.apple.com/us"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else if (selectedItem.contains("PC")) {
-                    val uriString = "http://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=15&sp=&qp=&list=n&iht=y&usc=All+Categories&ks=960&fs=saas&saas=saas&keys=keys&st=PC+games"
-                    val urivideogames: Uri = Uri.parse(uriString)
-                    val intentvideogames = Intent(Intent.ACTION_VIEW, urivideogames)
-                    startActivity(intentvideogames)
-                } else {
-                }
-            }
-
-            @Override
-            override fun onNothingSelected(av: AdapterView<*>?) {
-
-            }
+   /* private fun setItem(selectedItem: String?) {
+        if (selectedItem != null) {
+            itemSelected = selectedItem
         }
     }
+
+    private fun getItem() : String {
+        return itemSelected
+    }
+*/
 
     private fun setAdapter(spinner: Spinner?, d1: Int?) {
         when(d1){
@@ -1176,18 +263,209 @@ class WishList : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onMapReady(googleMap: GoogleMap) {
         val gMap: GoogleMap = googleMap
-        val granadaHills = LatLng(34.2793576, -118.50215270000001)
-        googleMap.addMarker(
+
+        switchButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // Auto Detect Location
+                currentLocation = getDeviceCurrentLocation()
+                currentLocation?.let { it1 -> LatLng(it1.latitude, it1.longitude) }?.let { it2 ->
+                    MarkerOptions()
+                        .position(it2)
+                        .title("Home")
+                }
+                moveCamera(gMap, currentLocation)
+            }
+            else{
+                // Manual Detect Location
+                val container = SpinnerWishListBinding.inflate(layoutInflater,layoutParent, false) as View
+                //layoutInflater2.inflate(R.layout.address_info_layout, null)
+
+                popUp = PopupWindow(container, 400, 400, true)
+                popUp.showAtLocation(layoutParent, Gravity.NO_GRAVITY, 500, 500)
+
+            }
+        }
+
+
+
+        val home = getDeviceLastLocation()
+
+        if (home != null) {
             MarkerOptions()
-                .position(granadaHills)
-                .title("Granada Hills, Ca.")
-        )
+                .position(LatLng(home.latitude, home.longitude))
+                .title("Home")
+            moveCamera(gMap, home)
+           // markStoreLocationsOnMap(gMap, "Playstation 5")
+        }
+        else {
+            if (switchButton.isChecked) {
+                val home2 = getDeviceCurrentLocation()
+                if (home2 != null) {
+                    MarkerOptions()
+                        .position(LatLng(home2.latitude, home2.longitude))
+                }
+            }
+            else {
+
+            }
+
+        }
+
+
 
     }
 
-    private fun getAdapter(adapter: ArrayAdapter<CharSequence>, item: String): SpinnerAdapter?{
+
+    private fun markStoreLocationsOnMap(map: GoogleMap, storeProduct: String) {
+
+        getPOIs()?.forEach { it ->
+            val categoryNames = it.place.types?.toString()
+            when (categoryNames) {
+                PlaceTypes.CAFE -> {
+
+                }
+                PlaceTypes.RESTAURANT -> {
+
+                }
+                PlaceTypes.ELECTRONICS_STORE -> {
+                    val locationLatLngList = bestBuyVM.getAllStoreLocationsWithAvailability(storeProduct)
+                    locationLatLngList.forEach {
+                        map.addMarker(
+                            MarkerOptions()
+                                .position(it)
+                        )
+                    }
+
+
+                }
+                PlaceTypes.CLOTHING_STORE -> {
+
+                }
+
+            }
+
+        }
+    }
+    private fun moveCamera (map : GoogleMap, lastLocation : Location?) {
+        if (lastLocation != null) {
+            map.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                LatLng(lastKnownLocation!!.latitude,
+                    lastKnownLocation!!.longitude), DEFAULT_ZOOM.toFloat()))
+        }
+        else {
+                Log.d(TAG, "Current location is null. Using defaults.")
+             //   Log.e(TAG, "Exception: %s", task.exception)
+            map.moveCamera(CameraUpdateFactory
+                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat()))
+                map.uiSettings.isMyLocationButtonEnabled = false
+        }
+    }
+
+    private fun getPOIs() : MutableList<PlaceLikelihood>? {
+        var response: FindCurrentPlaceResponse? = null
+
+    // Use fields to define the data types to return.
+            val placeFields: List<Place.Field> = listOf(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.TYPES)
+
+    // Use the builder to create a FindCurrentPlaceRequest.
+            val request: FindCurrentPlaceRequest = FindCurrentPlaceRequest.newInstance(placeFields)
+
+    // Call findCurrentPlace and handle the response (first check that the user has granted permission).
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
+
+                val placeResponse = placesClient.findCurrentPlace(request)
+                placeResponse.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        response = task.result
+                        for (placeLikelihood: PlaceLikelihood in response?.placeLikelihoods ?: emptyList()) {
+                            Log.i(
+                                TAG,
+                                "Place '${placeLikelihood.place.name}' has likelihood: ${placeLikelihood.likelihood}"
+                            )
+                        }
+                    } else {
+                        val exception = task.exception
+                        if (exception is ApiException) {
+                            Log.e(TAG, "Place not found: ${exception.statusCode}")
+                        }
+                    }
+                }
+            } else {
+                // A local method to request required permissions;
+                // See https://developer.android.com/training/permissions/requesting
+                getLocationPermission()
+            }
+
+        return response?.placeLikelihoods
+    }
+
+    private fun getLocationPermission() {
+
+        val permissionGranted = ContextCompat.checkSelfPermission(this.applicationContext,
+            Manifest.permission.ACCESS_FINE_LOCATION)
+
+        when (permissionGranted) {
+            PackageManager.PERMISSION_GRANTED -> {
+                locationPermissionGranted = true
+            }
+            PackageManager.PERMISSION_DENIED -> {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+
+            }
+
+        }
+     }
+
+
+    private fun getDeviceLastLocation(): Location? {
+        var lastKnownLocation : Location? = null
+
+        try {
+                getLocationPermission()
+                if (locationPermissionGranted) {
+                    val locationResult = fusedLocationProviderClient.lastLocation
+                    locationResult.addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Set the map's camera position to the current location of the device.
+                            lastKnownLocation = task.result
+
+                        }
+                    }
+                }
+        } catch (e: SecurityException) {
+            Log.e("Exception: %s", e.message, e)
+        }
+            return lastKnownLocation
+    }
+
+    private fun getDeviceCurrentLocation(): Location? {
+        var currentKnownLocation : Location? = null
+
+        try {
+            getLocationPermission()
+            if (locationPermissionGranted) {
+                val locationResult = fusedLocationProviderClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY,CancellationTokenSource().token)
+                locationResult.addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Set the map's camera position to the current location of the device.
+                        currentKnownLocation = task.result
+
+                    }
+                }
+            }
+        } catch (e: SecurityException) {
+            Log.e("Exception: %s", e.message, e)
+        }
+        return currentKnownLocation
+    }
+
+    private fun getAdapter(adapter: ArrayAdapter<CharSequence>, item: String): SpinnerAdapter {
         adapter === ArrayAdapter.createFromResource(
             this,
             getID(item),
@@ -1197,6 +475,7 @@ class WishList : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
         return adapter
     }
 
+    @SuppressLint("DiscouragedApi")
     private fun getID(item: String): Int {
 
         var id = 0
@@ -1213,10 +492,13 @@ class WishList : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
 
     @JvmName("getName1")
     fun getName(): String {
-        val first: String = fName?.text.toString()
-        val last: String = lName?.text.toString()
+        lateinit var fName : TextView
+        lateinit var lName : TextView
+        val name : String?
+        val first: String = fName.text.toString()
+        val last: String = lName.text.toString()
         name = "$first $last"
-        return name!!
+        return name
     }
 
     companion object {
@@ -1225,23 +507,34 @@ class WishList : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
         var str1: String? = null
         var str2: String? = null
         var str3: String? = null
+        private val TAG = WishList::class.java.simpleName
+        private val DEFAULT_ZOOM = 15
+        private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+
+            // Keys for storing activity state.
+            // [START maps_current_place_state_keys]
+            private val KEY_CAMERA_POSITION = "camera_position"
+            private val KEY_LOCATION = "location"
+            // [END maps_current_place_state_keys]
+
+            // Used for selecting the current place.
+            private val M_MAX_ENTRIES = 5
     }
 
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id){
-                R.id.cat1AR -> {
-                    val intent1AR = Intent(this, ShoppingARView::class.java)
-                    intent1AR.putExtra("category1Images", arrayListOf(bestBuyVM.getAllPS4Images()))
-                    startActivity(intent1AR)
+                R.id.addToCart -> {
+                    val badge1Text = cat1BadgeText.text
+                    var badgeValue = badge1Text.toString().toInt()
+                    badgeValue += 1
+                    cat1BadgeText.text = badgeValue.toString()
                 }
-                R.id.cat2AR -> {
-
+                R.id.purchaseButton -> {
+                    val purchaseIntent = Intent(this@WishList, CheckoutActivity::class.java)
+                    startActivity(purchaseIntent)
                 }
 
-                R.id.cat3AR -> {
-
-                }
 
             }
         }

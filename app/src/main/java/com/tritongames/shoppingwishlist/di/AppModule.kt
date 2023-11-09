@@ -11,8 +11,9 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.tritongames.shoppingwishlist.data.models.bestbuy.BestBuyInterface
 import com.tritongames.shoppingwishlist.data.models.catalog.CatalogInterface
 import com.tritongames.shoppingwishlist.data.models.categories.ShoppingCategoriesInterface
-import com.tritongames.shoppingwishlist.data.models.contacts.ContactsDataClassItem
-import com.tritongames.shoppingwishlist.data.models.contacts.ContactsInterface
+import com.tritongames.shoppingwishlist.data.models.checkout.StripeCustomerApi
+import com.tritongames.shoppingwishlist.data.models.checkout.StripeInterface
+import com.tritongames.shoppingwishlist.data.models.contacts.ContactApi
 import com.tritongames.shoppingwishlist.data.repository.*
 import com.tritongames.shoppingwishlist.util.DispatcherProvider
 import dagger.Module
@@ -29,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
-const val BASE_URL = "https://apis.androidparadise.site/"
+const val BASE_URL = "https://apis.androidparadise.site"
 const val BEST_BUY_BASE_URL = "https://api.bestbuy.com"
 const val userPreferences = "user_preferences"
 
@@ -37,16 +38,6 @@ const val userPreferences = "user_preferences"
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideWishesApi() : ContactsDataClassItem {
-        return Retrofit.Builder()
-            .baseUrl((BASE_URL))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ContactsDataClassItem::class.java)
-    }
 
     @Singleton
     @Provides
@@ -109,12 +100,34 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideContactsInterface(): ContactsInterface {
+    fun provideContactsInterface(): ContactApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ContactsInterface::class.java)
+            .create(ContactApi::class.java)
+
+    }
+
+    @Singleton
+    @Provides
+    fun provideCheckoutInterface(): StripeInterface {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(StripeInterface::class.java)
+
+    }
+
+    @Singleton
+    @Provides
+    fun provideCustomerCheckoutInterface(): StripeCustomerApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(StripeCustomerApi::class.java)
 
     }
 

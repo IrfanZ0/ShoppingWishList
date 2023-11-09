@@ -40,6 +40,46 @@ import javax.inject.Inject
         assertThat("The email exists", value.contains("xman@gmail.com"))
 
     }
+
+    @Test
+    fun getPhoneNumber() {
+    }
+
+    @Test
+    fun getAddress() {
+    }
+
+    @Test
+    fun getID() {
+    }
+
+    @Test
+    fun getUserName() {
+    }
+
+    @Test
+    fun getCity() {
+    }
+
+    @Test
+    fun getState() {
+    }
+
+    @Test
+    fun getContactEmails() {
+    }
+
+    @Test
+    fun getContactPasswords() {
+    }
+
+    @Test
+    fun getFirstNames() {
+    }
+
+    @Test
+    fun getLastNames() {
+    }
 }
 
 class CreateInstance(

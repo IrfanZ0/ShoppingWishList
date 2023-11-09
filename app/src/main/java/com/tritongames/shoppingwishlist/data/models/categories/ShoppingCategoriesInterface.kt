@@ -5,6 +5,8 @@ import retrofit2.http.GET
 
 interface ShoppingCategoriesInterface {
 
+
+
     @GET("/IrfanZ0/Shopping-Wish-List/blob/master/ShoppingWishList/src/com/shop/shoppingwishlist/ShopCategories")
     suspend fun getAllCategoriesIcons() : Response<List<ShoppingCategoriesDataClass>>
 

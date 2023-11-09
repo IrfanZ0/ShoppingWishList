@@ -2,6 +2,7 @@ package com.tritongames.shoppingwishlist.data.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import com.tritongames.shoppingwishlist.data.models.bestbuy.Image
 import com.tritongames.shoppingwishlist.data.repository.bestbuy.BestBuyRepository
 import com.tritongames.shoppingwishlist.data.repository.userPreferences.UserPreferenceRepository
@@ -43,17 +44,15 @@ class BestBuyViewModel @Inject constructor(private val bbRepository: BestBuyRepo
     private val _productload = MutableStateFlow <BestBuyLoadingEvent>(uiState.value)
     val productLoad: MutableStateFlow<BestBuyLoadingEvent> = _productload
 
-
-
-    fun getAllPS4Images() : List<String>{
-        var ps4ProductImageList: List<String> = listOf()
+    fun getAllGamingImages() : List<String>{
+        var gamingProductImageList: List<String> = listOf()
 
         dispatchers?.let { it ->
             viewModelScope.launch(it.io) {
                 when (val loadResponse =
-                    dataStoreVM.read()?.let { bbRepository.getBestBuyPS4Products(it) }){
-                    is Resource.Success -> {ps4ProductImageList =
-                        listOf(loadResponse.data?.get(0)?.products?.get(0)?.images.toString())!!
+                    dataStoreVM.read()?.let { bbRepository.getBestBuyGamingProducts(it) }){
+                    is Resource.Success -> {gamingProductImageList =
+                        listOf(loadResponse.data?.get(0)?.products?.get(0)?.images.toString())
                     }
                     is Resource.Error -> _productload.value = BestBuyLoadingEvent.Error{loadResponse.errorMsg.toString()}
                     else -> {}
@@ -61,7 +60,38 @@ class BestBuyViewModel @Inject constructor(private val bbRepository: BestBuyRepo
 
             }
         }
-        return ps4ProductImageList
+        return gamingProductImageList
+    }
+
+    fun getAllStoreLocationsWithAvailability(productName : String) : List<LatLng>{
+        var gamingStoreLocationList: List<LatLng> = listOf()
+
+        dispatchers?.let { it ->
+            viewModelScope.launch(it.io) {
+                when (val loadResponse =
+                    dataStoreVM.read()?.let { bbRepository.getStores(it) }){
+                    is Resource.Success -> {
+                        for (i in 0 ..(loadResponse.data?.size ?: 0)) {
+                            if (loadResponse.data?.get(i)?.product?.get(i)?.name == productName) {
+                                gamingStoreLocationList =
+                                    listOf(
+                                        LatLng(
+                                            loadResponse.data[i].stores[i].lat, loadResponse.data[i].stores[i].lng
+                                        )
+                                    )
+
+                            }
+
+                        }
+
+                    }
+                    is Resource.Error -> _productload.value = BestBuyLoadingEvent.Error{loadResponse.errorMsg.toString()}
+                    else -> {}
+                }
+
+            }
+        }
+        return gamingStoreLocationList
     }
 
 

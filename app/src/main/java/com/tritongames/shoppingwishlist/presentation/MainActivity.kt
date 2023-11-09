@@ -49,7 +49,7 @@ class MainActivity: AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id){
             R.id.createNew ->{
-                val createNewUser = Intent(this, CreateNewUserLogin::class.java)
+                val createNewUser = Intent(this, CreateNewUserRegistration::class.java)
                 startActivity(createNewUser)
 
             }

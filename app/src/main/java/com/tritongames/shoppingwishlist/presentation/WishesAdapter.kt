@@ -6,24 +6,24 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tritongames.shoppingwishlist.R
-import com.tritongames.shoppingwishlist.data.models.contacts.ContactsDataClassItem
+import com.tritongames.shoppingwishlist.data.models.catalog.CatalogProducts
 
 class WishesAdapter: RecyclerView.Adapter<WishesAdapter.WishesViewHolder>(){
     class WishesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
-    private val diffCallback = object: DiffUtil.ItemCallback<ContactsDataClassItem>(){
-        override fun areItemsTheSame(oldItem: ContactsDataClassItem, newItem: ContactsDataClassItem): Boolean {
+    private val diffCallback = object: DiffUtil.ItemCallback<CatalogProducts>(){
+        override fun areItemsTheSame(oldItem: CatalogProducts, newItem: CatalogProducts): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ContactsDataClassItem, newItem: ContactsDataClassItem): Boolean {
+        override fun areContentsTheSame(oldItem: CatalogProducts, newItem: CatalogProducts): Boolean {
             return oldItem == newItem
         }
 
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
-    var wishesList: List<ContactsDataClassItem>
+    var wishesList: List<CatalogProducts>
         get() = differ.currentList
         set(value) {differ.submitList(value)}
 

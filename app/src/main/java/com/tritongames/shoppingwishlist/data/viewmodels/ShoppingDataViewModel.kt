@@ -174,5 +174,20 @@ class ShoppingDataViewModel @Inject constructor (private val shopCatRepo: ShopCa
         return modelImagesStrings
     }
 
+    fun getProductCheckoutList(product: String?) : MutableList<String> {
+        val productList : MutableList<String> = mutableListOf()
+        val productName = product?.substringBefore('$')
+        val productPrice = product?.substringAfter('$')
+        if (productName != null) {
+            productList.add(productName)
+        }
+        if (productPrice != null) {
+            productList.add(productPrice)
+        }
+
+        return productList
+
+    }
+
 
 }

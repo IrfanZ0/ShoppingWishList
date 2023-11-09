@@ -6,24 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!-- Both "AR Optional" and "AR Required" apps require CAMERA permission. -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature
-        android:name="android.hardware.camera.ar"
-        android:required="true"/>
-
-    <!-- Sceneform requires OpenGL ES 3.0 or later. -->
-    <uses-feature android:glEsVersion="0x00030000" android:required="true" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
-    <!-- Indicates that app requires ARCore ("AR Required"). Ensures the app is
-         visible only in the Google Play Store on devices that support ARCore.
-         For "AR Optional" apps remove this line. -->
-
-
-
     <application
         android:name=".WishesApplication"
         android:allowBackup="true"
@@ -36,74 +18,40 @@
         android:theme="@style/Theme.ShoppingWishList"
         tools:targetApi="33">
 
-    <!-- Indicates that app requires ARCore ("AR Required"). Causes the Google
-    Play Store to download and install Google Play Services for AR along
-    with the app. For an "AR Optional" app, specify "optional" instead of
-    "required".
--->
-    <meta-data android:name="com.google.ar.core" android:value="required" />
-
         <activity
-            android:name=".presentation.CheckoutActivity"
-            android:exported="true"
-            android:label="@string/shopAR">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
-        <activity
-            android:name=".presentation.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.ShoppingWishList" />
-
-
-        <activity
-            android:name=".presentation.Shop"
-            android:exported="true"
-            android:label="@string/shopName" />
-
-        <activity
-            android:name=".presentation.WishList"
-            android:label="@string/wishListName"
+            android:name=".presentation.CreateNewUserRegistration"
             android:exported="true" />
 
 
         <activity
-            android:name=".presentation.CreateNewUserLogin"
-            android:label="Create New User Login" />
+            android:name=".presentation.CheckoutActivity"
+            android:exported="true"
+            android:label="@string/Checkout">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-        <!--
-             TODO: Before you run your application, you need a Google Maps API key.
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ShoppingWishList" />
+        <activity
+            android:name=".presentation.Shop"
+            android:exported="true"
+            android:label="@string/shopName" />
+        <activity
+            android:name=".presentation.WishList"
+            android:exported="true"
+            android:label="@string/wishListName" />
 
-             To get one, follow the directions here:
-
-                https://developers.google.com/maps/documentation/android-sdk/get-api-key
-
-             Once you have your API key (it starts with "AIza"), define a new property in your
-             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
-             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
-        <!--
-             TODO: Before you run your application, you need a Google Maps API key.
-
-             To get one, follow the directions here:
-
-                https://developers.google.com/maps/documentation/android-sdk/get-api-key
-
-             Once you have your API key (it starts with "AIza"), define a new property in your
-             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
-             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
-        -->
-<!--        <meta-data-->
-<!--            android:name="com.google.android.gms.version"-->
-<!--            android:value="@integer/google_play_services_version" />-->
+            android:value="${GOOGLE_MAPS_API_KEY}" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

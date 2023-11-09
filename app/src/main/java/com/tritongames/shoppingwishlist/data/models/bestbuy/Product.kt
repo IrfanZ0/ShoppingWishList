@@ -285,7 +285,7 @@ data class Product(
     @SerializedName("shortDescription")
     val shortDescription: Any,
     @SerializedName("sku")
-    val sku: Int,
+    val sku: Long,
     @SerializedName("softwareAge")
     val softwareAge: Any,
     @SerializedName("softwareGrade")

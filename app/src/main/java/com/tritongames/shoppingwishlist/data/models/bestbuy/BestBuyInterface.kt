@@ -6,5 +6,8 @@ import retrofit2.http.Query
 
 interface BestBuyInterface {
     @GET("/v1/products((categoryPath.id=pcmcat295700050012))?&format=json")
-    suspend fun getBestBuyPS4Products(@Query("bestBuyAPIKey") BEST_BUY_API_KEY: String) : Response<List<BestBuyAPI>>
+    suspend fun getBestBuyGamingProducts(@Query("bestBuyAPIKey") BEST_BUY_API_KEY: String) : Response<List<BestBuyAPI>>
+
+    @GET("/v1/products((categoryPath.id=pcmcat295700050012))&format=json")
+    suspend fun getStores(@Query("bestBuyApiKey") BEST_BUY_API_KEY: String) : Response<List<StoresInfo>>
 }

@@ -1,9 +1,9 @@
 package com.tritongames.shoppingwishlist.data.models.catalog
 
 
-import com.google.gson.annotations.SerializedName
-
 data class CatalogProducts(
-    @SerializedName("A")
-    val a: String
+       val id: String,
+        val name: String,
+        val price: String,
+        val image: String
 )
