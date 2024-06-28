@@ -141,7 +141,7 @@ fun ShoppingScene(
         val homeLocation = getCustomLocation(address = "11149 Valjean Avenue, Granada Hills, California, 91344")
         val cameraPositionState = rememberCameraPositionState {
             position = CameraPosition.fromLatLngZoom(
-                homeLocationn,
+                homeLocation,
                 20f
             )
         }
