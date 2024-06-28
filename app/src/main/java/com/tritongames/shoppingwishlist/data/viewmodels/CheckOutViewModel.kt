@@ -10,9 +10,9 @@ import com.stripe.Stripe
 import com.tritongames.shoppingwishlist.BuildConfig
 import com.tritongames.shoppingwishlist.data.models.checkout.StripePaymentIntent
 import com.tritongames.shoppingwishlist.data.repository.checkout.CheckoutRepository
-import com.tritongames.shoppingwishlist.util.DispatcherProvider
 import com.tritongames.shoppingwishlist.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
-class CheckOutViewModel @Inject constructor(private val checkoutRepo: CheckoutRepository, private val dispatchers: DispatcherProvider?):
+class CheckOutViewModel @Inject constructor(private val checkoutRepo: CheckoutRepository, private val dispatchers: CoroutineDispatcher):
     ViewModel(){
 
 
@@ -37,8 +37,8 @@ class CheckOutViewModel @Inject constructor(private val checkoutRepo: CheckoutRe
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun createNewPaymentIntent(amount: String, currency: String, description: String, email: String) {
 
-        dispatchers?.let {
-            viewModelScope.launch(it.io) {
+        dispatchers.let {
+            viewModelScope.launch(it) {
                 //_checkoutLoad.value = CheckoutLoadingEvent.Loading
                 val stripePayment = StripePaymentIntent(amount, currency, description, email)
 
@@ -48,9 +48,9 @@ class CheckOutViewModel @Inject constructor(private val checkoutRepo: CheckoutRe
 
                     is Resource.Success -> {
 
-                         val gson = GsonBuilder().setLenient().setPrettyPrinting().create()
+                        val gson = GsonBuilder().setLenient().setPrettyPrinting().create()
 
-                         val jsonString: String
+                        val jsonString: String
                         val paymentMap = mutableMapOf(
                             "amount" to amount,
                             "currency" to currency,
@@ -89,8 +89,8 @@ class CheckOutViewModel @Inject constructor(private val checkoutRepo: CheckoutRe
     }
 
     fun getPaymentAmount(id: String) {
-        dispatchers?.let { it ->
-            viewModelScope.launch(it.io) {
+        dispatchers.let { it ->
+            viewModelScope.launch(it) {
                 _checkoutLoad.value = CheckoutLoadingEvent.Loading
                 when (val checkoutResponse = checkoutRepo.getPaymentIntent(id)) {
                     is Resource.Error -> checkoutResponse.errorMsg?.let {
@@ -112,8 +112,8 @@ class CheckOutViewModel @Inject constructor(private val checkoutRepo: CheckoutRe
     }
 
     fun updatePaymentIntent(id: String, updatedSubTotal: Double) {
-        dispatchers?.let { it ->
-            viewModelScope.launch(it.io) {
+        dispatchers.let { it ->
+            viewModelScope.launch(it) {
                 _checkoutLoad.value = CheckoutLoadingEvent.Loading
                 when (val checkoutResponse = checkoutRepo.updatePaymentIntent(id)) {
                     is Resource.Error -> checkoutResponse.errorMsg?.let {
@@ -124,7 +124,7 @@ class CheckOutViewModel @Inject constructor(private val checkoutRepo: CheckoutRe
 
                     is Resource.Success -> {
                         checkoutResponse.data?.amount ?: updatedSubTotal.toInt()
-                       _checkoutLoad.value = CheckoutLoadingEvent.Success("${ checkoutResponse.data}")
+                        _checkoutLoad.value = CheckoutLoadingEvent.Success("${ checkoutResponse.data}")
 
                         checkoutResponse.data?.let { it1 -> Log.d("CheckOutViewModel", it1.amount) }
                     }

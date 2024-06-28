@@ -15,6 +15,7 @@ import javax.inject.Inject
 class FirebaseAuthImpl @Inject constructor(): FirebaseInterface {
 
     private var loginSuccess: Boolean = false
+    private var signUpSuccess = false
     override val currentUser: Flow<User>
         @SuppressLint("RestrictedApi")
         get() = callbackFlow {
@@ -34,11 +35,13 @@ class FirebaseAuthImpl @Inject constructor(): FirebaseInterface {
     }
 
     override fun signInSuccess(): Boolean {
+        Log.d("FireBaseAuthImpl", "Sign in with email and password was $loginSuccess")
         return loginSuccess
     }
 
     override fun signUpSuccess(): Boolean {
-        TODO("Not yet implemented")
+        Log.d("FireBaseAuthImpl", "Sign up with email and password was $signUpSuccess")
+        return signUpSuccess
     }
 
     override fun signOutSuccess(): Boolean {
@@ -47,14 +50,7 @@ class FirebaseAuthImpl @Inject constructor(): FirebaseInterface {
 
     override suspend fun signIn(email: String, password: String) {
         Firebase.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            loginSuccess = if (task.isSuccessful) {
-                Log.d("FireBaseAuthImpl", "Sign in with email and password was successful")
-
-                true
-            } else {
-                Log.d("FireBaseAuthImpl", "Sign in with email and password was not successful")
-                false
-            }
+            loginSuccess = task.isSuccessful
 
         }
 
@@ -62,7 +58,17 @@ class FirebaseAuthImpl @Inject constructor(): FirebaseInterface {
     }
 
     override suspend fun signUp(email: String, password: String) {
-        Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+       Firebase.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+           signUpSuccess = if (task.isSuccessful) {
+               Log.d("FirebaseAuthImpl", "Creating user $email was a success")
+               true
+           } else {
+               Log.d("FirebaseAuthImpl", "Creating user $email was unsuccessful")
+               false
+           }
+       }
+
+
     }
 
     override suspend fun signOut() {

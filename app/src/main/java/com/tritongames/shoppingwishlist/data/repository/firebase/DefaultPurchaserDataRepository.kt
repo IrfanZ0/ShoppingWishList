@@ -5,68 +5,85 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.tritongames.shoppingwishlist.data.models.firebase.PurchaserData
-import kotlinx.coroutines.tasks.await
+import com.tritongames.shoppingwishlist.data.viewmodels.FirebasePurchaserViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.MainCoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class DefaultPurchaserDataRepository @Inject constructor(): PurchaserDataRepository {
+class DefaultPurchaserDataRepository @Inject constructor(
+    private val mainDispatchers: MainCoroutineDispatcher,
+    private val ioDispatchers: CoroutineDispatcher
+): PurchaserDataRepository {
     val TAG = "DefaultPurchaserDataRepository"
-    companion object {
 
-    }
-    override suspend fun getPurchaserData(email: String): List<PurchaserData> {
+    override suspend fun getPurchaserData(email: String) = coroutineScope {
         val purchaserInfo: MutableList<PurchaserData> = mutableListOf()
-        try {
-            val authorizedCurrentUser = Firebase.auth.currentUser
+        val authorizedCurrentUser = Firebase.auth.currentUser
+        var pData = PurchaserData(
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        )
+        val purchaserRepo: PurchaserDataRepository = DefaultPurchaserDataRepository(mainDispatchers, ioDispatchers)
+        withContext(ioDispatchers) {
             if (authorizedCurrentUser != null && authorizedCurrentUser.email == email) {
                 val fb = Firebase.firestore
-                val docRef = fb.collection("purchasers").document(email)
-                val docSnapshot = docRef.get().await()
-                if (docSnapshot != null) {
-
-                    val pData = PurchaserData(
-                        docSnapshot.data?.get("purchaserImage").toString(),
-                        docSnapshot.data?.get("purchaserFirstName").toString(),
-                        docSnapshot.data?.get("purchaserLastName").toString(),
-                        docSnapshot.data?.get("purchaserAddress").toString(),
-                        docSnapshot.data?.get("purchaserCity").toString(),
-                        docSnapshot.data?.get("purchaserState").toString(),
-                        docSnapshot.data?.get("purchaserZipCode").toString(),
-                        docSnapshot.data?.get("purchaserEmail").toString(),
-                        docSnapshot.data?.get("purchaserPhone").toString(),
-                        docSnapshot.data?.get("purchaserUserName").toString(),
-                        docSnapshot.data?.get("purchaserPassword").toString()
-
-
+                val docRef = async { fb.collection("purchasers").document(email) }
+                val docReference = docRef.await()
+                docReference.get().addOnSuccessListener {
+                    pData = PurchaserData(
+                        it.data?.get("purchaserImage").toString(),
+                        it.data?.get("purchaserFirstName").toString(),
+                        it.data?.get("purchaserLastName").toString(),
+                        it.data?.get("purchaserAddress").toString(),
+                        it.data?.get("purchaserCity").toString(),
+                        it.data?.get("stateOfPurchaser").toString(),
+                        it.data?.get("purchaserZipCode").toString(),
+                        it.data?.get("purchaserEmail").toString(),
+                        it.data?.get("purchaserPhone").toString(),
+                        it.data?.get("purchaserUserName").toString(),
+                        it.data?.get("purchaserPassword").toString()
                     )
-                    purchaserInfo.add(pData)
+
+                    val fbPurchaserVM = FirebasePurchaserViewModel(purchaserRepo, mainDispatchers, ioDispatchers)
+                    fbPurchaserVM.writePurchaserState(pData)
+
                 }
-            }
-            else {
+            } else {
                 Log.d(TAG, "User has probably not signed in with correct email")
             }
+        }
+        withContext(mainDispatchers) {
 
-        }catch(e: Exception) {
-            Log.d(TAG, e.message.toString())
+
         }
 
-        return purchaserInfo.toList()
     }
 
     override suspend fun savePurchaserData(pDataMap: HashMap<String, String>, email: String) {
-        try{
+
             val fb = Firebase.firestore
             val authorizedPurchaser = Firebase.auth.currentUser
 
-            if(authorizedPurchaser != null && authorizedPurchaser.email == email) {
-                fb.collection("purchasers").document(email).set(pDataMap)
-                    .addOnSuccessListener { Log.d(TAG, "Saving Purchaser Data was successful") }
-                    .addOnFailureListener{e -> Log.w(TAG, "Error writing purchaser data", e)}
+            withContext(ioDispatchers) {
+                if(authorizedPurchaser != null && authorizedPurchaser.email == email) {
+                    fb.collection("purchasers").document(email).set(pDataMap)
+                        .addOnSuccessListener { Log.d(TAG, "Saving Purchaser Data was successful") }
+                        .addOnFailureListener{e -> Log.w(TAG, "Error writing purchaser data", e)}
+                }
 
             }
 
-        }
-        catch(e: Exception) {
-            Log.d(TAG, e.message.toString())
-        }
     }
 }

@@ -94,8 +94,7 @@ class CheckoutActivity : AppCompatActivity() {
     private val TAG = "CheckoutActivity"
     val apiStripeKey = BuildConfig.STRIPE_API_KEY
     @Inject lateinit var stripeApi : StripeInterface
-     private val checkoutViewModel = ViewModelProvider(this)[CheckOutViewModel::class.java]
-
+    private lateinit var checkoutViewModel: CheckOutViewModel
 
     private val billingDetailsCollectionConfiguration: PaymentSheet.BillingDetailsCollectionConfiguration =
         PaymentSheet.BillingDetailsCollectionConfiguration(
@@ -105,6 +104,8 @@ class CheckoutActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkoutViewModel = ViewModelProvider(this)[CheckOutViewModel::class.java]
+
 
         data.add("Apples")
         data.add("0.50")

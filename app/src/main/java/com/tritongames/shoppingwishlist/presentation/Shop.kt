@@ -1,10 +1,13 @@
 package com.tritongames.shoppingwishlist.presentation
 
+import android.graphics.Bitmap
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,27 +26,43 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.tritongames.shoppingwishlist.R
-import com.tritongames.shoppingwishlist.data.models.firebase.FirebaseAuthImpl
+import com.tritongames.shoppingwishlist.data.models.ShoppingData.Companion.context
 import com.tritongames.shoppingwishlist.data.models.firebase.PurchaserData
-import com.tritongames.shoppingwishlist.data.repository.firebase.PurchaserDataRepository
 import com.tritongames.shoppingwishlist.data.viewmodels.FirebasePurchaserViewModel
 import com.tritongames.shoppingwishlist.presentation.ui.theme.ShoppingWishListTheme
-import javax.inject.Inject
+import kotlinx.coroutines.launch
+import java.util.Locale
 
-class Shop @Inject constructor(private val purchaserDataRepository: PurchaserDataRepository) : ComponentActivity() {
-    val pDataRepo = purchaserDataRepository
+
+class Shop: ComponentActivity() {
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val fbPurchaserVM: FirebasePurchaserViewModel by viewModels {FirebasePurchaserViewModel.Factory}
+        lateinit var purchaserData: PurchaserData
+        val email = Firebase.auth.currentUser?.email
+        val purchaserSB = StringBuilder()
+        lifecycleScope.launch {
+            fbPurchaserVM.purchaserState.collect {pState ->
+                purchaserSB.append(pState.address)
+                .append(pState.city)
+                .append(pState.purchaserState)
+                .append(pState.zipCode)
+            }
+        }
+
         setContent {
             ShoppingWishListTheme {
                 // A surface container using the 'background' color from the theme
@@ -51,24 +70,44 @@ class Shop @Inject constructor(private val purchaserDataRepository: PurchaserDat
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val fbVM = FirebasePurchaserViewModel(purchaserDataRepository)
-                    val fbAuthImpl = FirebaseAuthImpl()
-                    val email = fbAuthImpl.currentUserEmail
-                    val address = fbVM.getPurchaserInfo(email)
+                    if (email != null) {
 
-                    ShoppingScene(email, address)
+                        ShoppingScene(purchaserSB.toString(), fbPurchaserVM)
+                    }
                 }
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun getCustomLocation(addressStringText: String): LatLng {
+        var latLng: LatLng = LatLng(34.273500, -118.488060)
+
+
+
+// Create a Geocoder instance
+        val maxResults = 1
+// Check if the SDK version supports the new GeocodeListener
+        if (Build.VERSION.SDK_INT >= 33) {
+
+            context?.let { Geocoder(it, Locale.getDefault()) }
+                ?.getFromLocationName("11149 Valjean Avenue, Granada Hills, California, 91344", maxResults, Geocoder.GeocodeListener {
+                        latLng = LatLng(it[0].latitude, it[0].longitude)
+                        Log.d("Shop", "The locations found are: $latLng")
+                })
+        }
+        return latLng
     }
 }
 
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun ShoppingScene(userEmail: String, userHomeAddress: List<PurchaserData>) {
+fun ShoppingScene(
+    userAddress: String,
+    fbPurchaserVM: FirebasePurchaserViewModel = viewModel(factory = FirebasePurchaserViewModel.Factory)
+) {
     var itemSearched by remember { mutableStateOf("")}
-
 
     // Item Search section
     Column(
@@ -86,72 +125,69 @@ fun ShoppingScene(userEmail: String, userHomeAddress: List<PurchaserData>) {
             onValueChange = {itemSearched = it},
             label = {Text("Type an item to search on map")}
         )
-    }
-    // Map Section
-    Column(
-        modifier = Modifier
-            .wrapContentHeight(Alignment.CenterVertically)
-            .wrapContentWidth(Alignment.CenterHorizontally),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val sbAddress = StringBuilder()
-        sbAddress
-            .append(userHomeAddress[0].address)
-            .append(userHomeAddress[0].city)
-            .append(userHomeAddress[0].purchaserState)
-            .append(userHomeAddress[0].zipCode)
 
-        val addressList = listOf(sbAddress.toString())
-
-        val homeAddressLatLng = getCustomLocation(addressList)
+//        val sbAddress = StringBuilder()
+//        sbAddress
+//            .append(userAddress[0])
+//            .append(userAddress[1])
+//            .append(userAddress[2])
+//            .append(userAddress[3])
+//        val address = Address(Locale.US)
+//        address.setAddressLine(0, sbAddress.toString())
+//        val addressList = mutableListOf(address.getAddressLine(0))
+        val bitmapConfig = Bitmap.Config.ARGB_8888
+        val bitmap_home = Bitmap.createBitmap(48,48, bitmapConfig)
+        Log.d("Shop", "Home Address Location: getCustomLocation(address = \"11149 Valjean Avenue, Granada Hills, California, 91344\")")
+        val homeLocation = getCustomLocation(address = "11149 Valjean Avenue, Granada Hills, California, 91344")
         val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(homeAddressLatLng, 10f)
+            position = CameraPosition.fromLatLngZoom(
+                homeLocationn,
+                20f
+            )
         }
         GoogleMap(modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState
         ) {
-            Marker(
-                state = MarkerState(position = homeAddressLatLng),
+            Marker (
+                state = MarkerState(position = getCustomLocation(address = "11149 Valjean Avenue, Granada Hills, California, 91344")),
                 title = "Home",
-                snippet = "Marker in Home",
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.home)
+                icon = BitmapDescriptorFactory.fromBitmap(bitmap_home)
+
             )
+
         }
 
-
-
-
-    }
-
-}
-
-@Composable
-fun ShoppingScenePrep (fbVM: FirebasePurchaserViewModel, fbAuthImpl: FirebaseAuthImpl) {
-
-    if (fbAuthImpl.hasUser()) {
-        val userEmail = fbAuthImpl.currentUserEmail
-        ShopScene(
-            email = userEmail,
-            address = fbVM.getPurchaserInfo(userEmail)
-        )
-
     }
 
 
 }
-
-@Composable
-fun ShopScene(email: String, address: List<PurchaserData>) {
-
-}
-
+//
+//@Composable
+//fun ShoppingScenePrep (fbVM: FirebasePurchaserViewModel, fbAuthImpl: FirebaseAuthImpl) {
+//
+//    if (fbAuthImpl.hasUser()) {
+//        val userEmail = fbAuthImpl.currentUserEmail
+//        ShopScene(
+//            email = userEmail,
+//            address = fbVM.getPurchaserInfo(userEmail)
+//        )
+//
+//    }
+//
+//
+//}
+//
+//@Composable
+//fun ShopScene(email: String, address: List<PurchaserData>) {
+//
+//}
+/*
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Preview(showBackground = true)
 @Composable
 fun ShoppingScenePreview(
-    userEmail: String = "iziaulla@gmail.com",
-    address: List<PurchaserData> = listOf(
+
+    purchaserList: List<PurchaserData> = listOf(
         PurchaserData(
             "",
             "Irfan",
@@ -169,37 +205,34 @@ fun ShoppingScenePreview(
 ){
 
     ShoppingWishListTheme {
-        ShoppingScene(userEmail, address)
+        ShoppingScene(purchaserList[0].email, purchaserList)
     }
 
-}
+}*/
 
 
 
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun getCustomLocation(addressList: List<String>): LatLng {
-    lateinit var latLng: LatLng
+fun getCustomLocation(address: String): LatLng {
     val context = LocalContext.current
-    val addressString: StringBuilder = StringBuilder()
-    for(address in addressList) {
-        addressString.append(address)
+
+// Create a Geocoder instance
+    val geocoder = Geocoder(context, Locale.getDefault())
+    val maxResults = 1
+    var coordinates: LatLng by remember { mutableStateOf(LatLng(0.0, 0.0)) }
+// Check if the SDK version supports the new GeocodeListener
+    if (Build.VERSION.SDK_INT >= 33) {
+        Log.d("Shop", address.toString())
+        geocoder.getFromLocationName(address, maxResults) {
+             coordinates = LatLng(it[0].latitude,it[0].longitude)
+
+            Log.d("Shop", coordinates.toString())
+
+        }
+
     }
-    val gc = Geocoder(context)
 
-    val locationList = gc.getFromLocationName(
-        addressString.toString(),
-        1,
-        -90.0,
-        -180.0,
-        90.0,
-        180.0
-    )
-    val customLocationLatitude = locationList?.get(0)?.latitude
-    val customLocationLongitude = locationList?.get(0)?.longitude
-
-    latLng = LatLng(customLocationLatitude!!, customLocationLongitude!!)
-
-    return latLng
+    return coordinates
 }

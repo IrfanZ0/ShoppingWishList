@@ -31,15 +31,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
-import com.tritongames.shoppingwishlist.BuildConfig
 import com.tritongames.shoppingwishlist.data.models.firebase.FirebaseAuthImpl
 import com.tritongames.shoppingwishlist.data.viewmodels.FireBaseSignInViewModel
+import com.tritongames.shoppingwishlist.data.viewmodels.FirebasePurchaserViewModel
 import com.tritongames.shoppingwishlist.presentation.ui.theme.ShoppingWishListTheme
 import com.tritongames.shoppingwishlist.util.FireBaseSignInViewModelFactory
 
@@ -47,14 +44,6 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val fbOptionsBuilder = FirebaseOptions.Builder()
-        fbOptionsBuilder
-            .setApiKey(BuildConfig.FIREBASE_API_KEY)
-            .setApplicationId("com.tritongames.loginregister")
-            .setProjectId("loginregister-f8641")
-            .setStorageBucket("loginregister-f8641.appspot.com")
-
-        FirebaseApp.initializeApp(this, fbOptionsBuilder.build())
 
 
         setContent {
@@ -66,7 +55,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val fbAuthImpl = FirebaseAuthImpl()
                     val fbSignInVM = ViewModelProvider(this, FireBaseSignInViewModelFactory(fbAuthImpl))[FireBaseSignInViewModel::class.java]
-                    LoginShop(fbSignInVM)
+                    val fbPurchaserVM = ViewModelProvider(this, FirebasePurchaserViewModel.Factory)[FirebasePurchaserViewModel::class.java]
+                    LoginShop(fbSignInVM, fbPurchaserVM)
                 }
             }
         }
@@ -75,7 +65,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun LoginShop(fbSignInVM: FireBaseSignInViewModel) {
+fun LoginShop(fbSignInVM: FireBaseSignInViewModel, fbPurchaserVM: FirebasePurchaserViewModel) {
     var email by remember { mutableStateOf("")}
     var password by remember { mutableStateOf("")}
     val loginError by remember { mutableStateOf(false)}
@@ -89,7 +79,7 @@ fun LoginShop(fbSignInVM: FireBaseSignInViewModel) {
         .wrapContentHeight(Alignment.CenterVertically)
     ) {
         Text(
-            text = "Welcome to Shopping Wish List - Login.  This is just a login test",
+            text = "Welcome to Shopping Wish List - Login.",
         )
         Row(modifier =
         Modifier
@@ -158,7 +148,7 @@ fun LoginShop(fbSignInVM: FireBaseSignInViewModel) {
                 startActivity(context, goToRegisterPage, null)
             }
 
-            ElevatedButton(onClick = { checkLogin(fbSignInVM, context) }) {
+            ElevatedButton(onClick = { checkLogin(fbSignInVM, fbPurchaserVM, email, context) }) {
                 Text("Login")
             }
         }
@@ -171,11 +161,14 @@ fun LoginShop(fbSignInVM: FireBaseSignInViewModel) {
 
 fun  checkLogin(
     fbSignInVM: FireBaseSignInViewModel,
+    fbPurchaserVM: FirebasePurchaserViewModel,
+    email: String,
     context: Context,
 ){
     if (fbSignInVM.onSignInClick()) {
         Toast.makeText(context, "Successful Login. Time to shop", Toast.LENGTH_SHORT).show()
         val goToShopIntent = Intent(context, Shop::class.java)
+        fbPurchaserVM.getPurchaserInfo(email)
         startActivity(context, goToShopIntent, null)
 
     }
@@ -186,7 +179,7 @@ fun  checkLogin(
 
 
 }
-
+/*
 @RequiresApi(Build.VERSION_CODES.S)
 @Preview(showBackground = true)
 @Composable
@@ -194,8 +187,8 @@ fun LoginShopPreview() {
     ShoppingWishListTheme {
         val fbAuthImpl = FirebaseAuthImpl()
         val fbSignInVM = FireBaseSignInViewModel(fbAuthImpl)
-        LoginShop(fbSignInVM)
+        LoginShop(fbSignInVM, fbPurchaserVM)
 
 
     }
-}
+}*/

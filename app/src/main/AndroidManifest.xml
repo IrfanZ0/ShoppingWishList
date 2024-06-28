@@ -32,7 +32,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="${GOOGLE_MAPS_API_KEY}" />
 
         <activity
             android:name=".presentation.CreateNewUserRegistration"
@@ -40,17 +40,17 @@
         <activity
             android:name=".presentation.CheckoutActivity"
             android:exported="true"
-            android:label="@string/Checkout">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/Checkout" />
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.ShoppingWishList" />
+            android:theme="@style/Theme.ShoppingWishList">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".presentation.Shop"
             android:exported="true"
