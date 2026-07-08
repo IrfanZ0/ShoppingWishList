@@ -1,0 +1,19 @@
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.ktor)
+    id 'application'
+}
+
+dependencies {
+    implementation libs.firebase.admin
+}
+
+application {
+    mainClass.set("com.tritongames.shoppingwishlist.util.FirebaseAdminKt")
+}
+
+ktor {
+    fatJar {
+        archiveFileName.set("admin-tools-fat.jar")
+    }
+}

@@ -1,26 +1,25 @@
 package com.tritongames.shoppingwishlist.presentation
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,172 +29,209 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
-import com.tritongames.shoppingwishlist.BuildConfig
-import com.tritongames.shoppingwishlist.data.models.firebase.FirebaseAuthImpl
-import com.tritongames.shoppingwishlist.data.viewmodels.FireBaseSignInViewModel
-import com.tritongames.shoppingwishlist.presentation.ui.theme.ShoppingWishListTheme
-import com.tritongames.shoppingwishlist.util.FireBaseSignInViewModelFactory
+import com.tritongames.shoppingwishlist.data.viewmodels.UserDataViewModel
+import com.tritongames.shoppingwishlist.ui.theme.ShoppingWishListTheme
+import com.tritongames.shoppingwishlist.util.SignInDetails
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.S)
+    private val userDataViewModel: UserDataViewModel by viewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val fbOptionsBuilder = FirebaseOptions.Builder()
-        fbOptionsBuilder
-            .setApiKey(BuildConfig.FIREBASE_API_KEY)
-            .setApplicationId("com.tritongames.loginregister")
-            .setProjectId("loginregister-f8641")
-            .setStorageBucket("loginregister-f8641.appspot.com")
-
-        FirebaseApp.initializeApp(this, fbOptionsBuilder.build())
-
-
+        FirebaseApp.initializeApp(this@MainActivity)
+        enableEdgeToEdge()
         setContent {
+            var checkLogin by remember { mutableStateOf(false) }
             ShoppingWishListTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val fbAuthImpl = FirebaseAuthImpl()
-                    val fbSignInVM = ViewModelProvider(this, FireBaseSignInViewModelFactory(fbAuthImpl))[FireBaseSignInViewModel::class.java]
-                    LoginShop(fbSignInVM)
+                Column(modifier = Modifier.padding(16.dp)) {
+                    SayHello()
+                    Registration()
+                    CheckLogin(userDataViewModel)
+
+
                 }
+
             }
         }
     }
 }
 
+@Composable
+fun SayHello() {
+    Text(
+        text = "Hello there!  Please select your role below and press done to continue to registration."
+    )
+}
 
 @Composable
-fun LoginShop(fbSignInVM: FireBaseSignInViewModel) {
-    var email by remember { mutableStateOf("")}
-    var password by remember { mutableStateOf("")}
-    val loginError by remember { mutableStateOf(false)}
-    var registerClicked by remember { mutableStateOf(false)}
-    FirebaseAuthImpl()
+fun Registration(){
+    Row(
+        modifier = Modifier.padding(10.dp).fillMaxWidth(1f),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        val context = LocalContext.current
+
+        Button(onClick = {
+            val registerIntent = Intent(context, CreateNewUserRegistration::class.java)
+            registerIntent.putExtra("Role", "Purchaser")
+            context.startActivity(registerIntent)
+        }
+        ) {
+            Text(text = "Purchaser")
+        }
+        Button(onClick = {
+            val registerIntent = Intent(context, CreateNewUserRegistration::class.java)
+            registerIntent.putExtra("Role", "Recipient")
+            context.startActivity(registerIntent)
+        }
+        ) {
+            Text(text = "Recipient")
+        }
+    }
+}
+
+@Composable
+fun ShowRegistrationPage(role: String) {
+    val context = LocalContext.current
+    val registerIntent = Intent(context, CreateNewUserRegistration::class.java)
+    registerIntent.putExtra("Role", role)
+    context.startActivity(registerIntent)
+}
+
+
+@Composable
+fun CheckLogin(userDataVM: UserDataViewModel) {
+    val signInStatus by userDataVM.loginState.collectAsState()
+    val purchaserData by userDataVM.purchaserDataState.collectAsState()
+
+    CheckLogin(
+        signInStatus = signInStatus,
+        purchaserData = purchaserData,
+        onLoginClick = { email, password ->
+            userDataVM.updateEmail(email)
+            userDataVM.updatePassword(password)
+            userDataVM.getPurchaserData()
+        }
+    )
+}
+
+@Composable
+fun CheckLogin(
+    signInStatus: SignInDetails,
+    purchaserData: List<com.tritongames.shoppingwishlist.data.models.firebase.purchaserdata.PurchaserData>,
+    onLoginClick: (String, String) -> Unit
+) {
+    LoginUI(
+        onLoginClick = onLoginClick,
+        isLoading = signInStatus is SignInDetails.Loading
+    )
+
+    // The Login composable handles navigation via LaunchedEffect
+    Login(signInStatus, purchaserData.toMutableList())
+}
+
+@Composable
+fun LoginUI(
+    onLoginClick: (String, String) -> Unit,
+    isLoading: Boolean = false
+) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
+            enabled = !isLoading
+        )
+
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            visualTransformation = PasswordVisualTransformation('*'),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            enabled = !isLoading
+        )
+
+        Button(
+            onClick = {
+                if (email.isNotBlank() && password.isNotBlank()) {
+                    onLoginClick(email, password)
+                } else {
+                    Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                }
+            },
+            enabled = !isLoading
+        ) {
+            Text(text = if (isLoading) "Logging in..." else "Login")
+        }
+    }
+}
+
+@Composable
+fun Login(
+    userState: SignInDetails,
+    purchaserData: MutableList<com.tritongames.shoppingwishlist.data.models.firebase.purchaserdata.PurchaserData>
+) {
 
     val context = LocalContext.current
-    Column(modifier =
-    Modifier
-        .wrapContentWidth(Alignment.CenterHorizontally)
-        .wrapContentHeight(Alignment.CenterVertically)
-    ) {
-        Text(
-            text = "Welcome to Shopping Wish List - Login.  This is just a login test",
-        )
-        Row(modifier =
-        Modifier
-            .wrapContentWidth(Alignment.CenterHorizontally)
-            .wrapContentHeight(Alignment.CenterVertically)
 
-        ) {
-
-        }
-
-        Row(modifier =
-        Modifier
-            .wrapContentWidth(Alignment.CenterHorizontally)
-            .wrapContentHeight(Alignment.CenterVertically)
-        ) {
-            Column(modifier =
-            Modifier
-                .wrapContentWidth(Alignment.CenterHorizontally)
-                .wrapContentHeight(Alignment.CenterVertically),
-                verticalArrangement = Arrangement.spacedBy(15.dp),
-                horizontalAlignment = Alignment.End
-            ) {
-                TextField(
-                    value = email,
-                    onValueChange = {
-                        email = it
-                        fbSignInVM.updateEmail(it)
-
-                    },
-                    label = { Text("Email") },
-                    visualTransformation = VisualTransformation.None,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    isError = loginError
-                )
-
-
-                TextField(
-                    value = password,
-                    onValueChange = {
-                        password = it
-                        fbSignInVM.updatePassword(it)
-                    },
-                    label = { Text("Password") },
-                    visualTransformation = PasswordVisualTransformation('*'),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    isError = loginError
-                )
-
-
-            }
-
-        }
-
-        Row(modifier =
-        Modifier
-            .wrapContentWidth(Alignment.End)
-            .wrapContentHeight(Alignment.CenterVertically),
-            horizontalArrangement = Arrangement.End
-        ) {
-            ElevatedButton(onClick = { registerClicked = true }) {
-                Text("Register")
-            }
-
-            if (registerClicked) {
-                val goToRegisterPage = Intent(context, CreateNewUserRegistration::class.java)
-                startActivity(context, goToRegisterPage, null)
-            }
-
-            ElevatedButton(onClick = { checkLogin(fbSignInVM, context) }) {
-                Text("Login")
+    if (userState is SignInDetails.Success && userState.loginSucess) {
+        LaunchedEffect(purchaserData) {
+            // Wait for data to be populated if it's currently the default empty object
+            val userData = purchaserData.firstOrNull()
+            if (userData != null && userData.email.isNotEmpty()) {
+                val goToMapIntent = Intent(context, MapsActivity::class.java).apply {
+                    putExtra("Email", userData.email)
+                    putExtra("First Name", userData.firstName)
+                    putExtra("Last Name", userData.lastName)
+                    putExtra("Address", userData.address)
+                    putExtra("City", userData.city)
+                    putExtra("State", userData.purchaserState)
+                    putExtra("Zip", userData.zipCode)
+                    putExtra("Phone", userData.phone)
+                    putExtra("Image", userData.purchaserImage)
+                    putExtra("Location", userData.location)
+                }
+                context.startActivity(goToMapIntent)
             }
         }
-
-
+    } else if (userState is SignInDetails.Error) {
+        LaunchedEffect(userState) {
+            Toast.makeText(context, userState.loginError, Toast.LENGTH_LONG).show()
+        }
     }
 }
 
 
 
-fun  checkLogin(
-    fbSignInVM: FireBaseSignInViewModel,
-    context: Context,
-){
-    if (fbSignInVM.onSignInClick()) {
-        Toast.makeText(context, "Successful Login. Time to shop", Toast.LENGTH_SHORT).show()
-        val goToShopIntent = Intent(context, Shop::class.java)
-        startActivity(context, goToShopIntent, null)
-
-    }
-    else {
-        Toast.makeText(context, "Unsuccessful Login. Please try again or register a new account", Toast.LENGTH_SHORT).show()
-
-    }
-
-
-}
-
-@RequiresApi(Build.VERSION_CODES.S)
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable
-fun LoginShopPreview() {
-    ShoppingWishListTheme {
-        val fbAuthImpl = FirebaseAuthImpl()
-        val fbSignInVM = FireBaseSignInViewModel(fbAuthImpl)
-        LoginShop(fbSignInVM)
+fun MainActivityPreview() {
+    ShoppingWishListTheme(
+        darkTheme = true,
+        dynamicColor = false
+            ){
+        Column {
+            SayHello()
+            Registration()
 
+
+
+
+        }
 
     }
 }

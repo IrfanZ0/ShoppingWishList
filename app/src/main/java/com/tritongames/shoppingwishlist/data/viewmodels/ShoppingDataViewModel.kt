@@ -14,9 +14,9 @@ import com.tritongames.shoppingwishlist.data.models.ShoppingData.Companion.mimeT
 import com.tritongames.shoppingwishlist.data.models.categories.ShoppingCategoriesDataClass
 import com.tritongames.shoppingwishlist.data.repository.category.ShopCategoryRepository
 import com.tritongames.shoppingwishlist.di.PreferenceKey
-import com.tritongames.shoppingwishlist.util.DispatcherProvider
 import com.tritongames.shoppingwishlist.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +28,11 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class ShoppingDataViewModel @Inject constructor (private val shopCatRepo: ShopCategoryRepository?, private val dispatcher: DispatcherProvider?, private val dataStore: DataStore<Preferences>?) : ViewModel() {
+class ShoppingDataViewModel @Inject constructor (
+    private val shopCatRepo: ShopCategoryRepository?,
+    private val dispatcherIO: CoroutineDispatcher,
+    private val dataStore: DataStore<Preferences>?
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ShoppingData())
     val uiState : StateFlow<ShoppingData> = _uiState.asStateFlow()
     private val TAG : String = ShoppingDataViewModel::class.java.simpleName
@@ -48,8 +52,8 @@ class ShoppingDataViewModel @Inject constructor (private val shopCatRepo: ShopCa
     {
         var categoryClipData : ClipData? = null
 
-        dispatcher?.let {
-            viewModelScope.launch (it.io){
+        dispatcherIO?.let {
+            viewModelScope.launch (it){
 
                 var showKey: String? = null
                 val userPreferenceKey = dataStore?.data

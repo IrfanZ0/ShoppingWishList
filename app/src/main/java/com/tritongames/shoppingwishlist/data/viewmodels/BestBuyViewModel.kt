@@ -6,9 +6,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.tritongames.shoppingwishlist.data.models.bestbuy.Image
 import com.tritongames.shoppingwishlist.data.repository.bestbuy.BestBuyRepository
 import com.tritongames.shoppingwishlist.data.repository.userPreferences.UserPreferenceRepository
-import com.tritongames.shoppingwishlist.util.DispatcherProvider
 import com.tritongames.shoppingwishlist.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,19 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BestBuyViewModel @Inject constructor(private val bbRepository: BestBuyRepository, private val userPreferenceRepository: UserPreferenceRepository, val dispatchers: DispatcherProvider?): ViewModel() {
-
-    fun getBestBuyRepository(): BestBuyRepository{
-        return bbRepository
-    }
-
-    fun getUserPrefRepository(): UserPreferenceRepository{
-        return userPreferenceRepository
-    }
-
-    fun getDispatcherProvider(): DispatcherProvider?{
-        return dispatchers
-    }
+class BestBuyViewModel @Inject constructor(private val bbRepository: BestBuyRepository, private val userPreferenceRepository: UserPreferenceRepository, val dispatchers: CoroutineDispatcher): ViewModel() {
 
     private var dataStoreVM: DataStoreViewModel = DataStoreViewModel(userPreferenceRepository)
     private val _uiState = MutableStateFlow(BestBuyLoadingEvent.Empty)
@@ -47,8 +35,8 @@ class BestBuyViewModel @Inject constructor(private val bbRepository: BestBuyRepo
     fun getAllGamingImages() : List<String>{
         var gamingProductImageList: List<String> = listOf()
 
-        dispatchers?.let { it ->
-            viewModelScope.launch(it.io) {
+        dispatchers.let { it ->
+            viewModelScope.launch(it) {
                 when (val loadResponse =
                     dataStoreVM.read()?.let { bbRepository.getBestBuyGamingProducts(it) }){
                     is Resource.Success -> {gamingProductImageList =
@@ -66,8 +54,8 @@ class BestBuyViewModel @Inject constructor(private val bbRepository: BestBuyRepo
     fun getAllStoreLocationsWithAvailability(productName : String) : List<LatLng>{
         var gamingStoreLocationList: List<LatLng> = listOf()
 
-        dispatchers?.let { it ->
-            viewModelScope.launch(it.io) {
+        dispatchers.let { it ->
+            viewModelScope.launch(it) {
                 when (val loadResponse =
                     dataStoreVM.read()?.let { bbRepository.getStores(it) }){
                     is Resource.Success -> {

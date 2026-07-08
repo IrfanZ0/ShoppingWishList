@@ -21,9 +21,9 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,17 +37,15 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.firestore
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.stripe.android.PaymentConfiguration
@@ -56,7 +54,6 @@ import com.stripe.android.paymentsheet.PaymentSheetResult
 import com.tritongames.shoppingwishlist.BuildConfig
 import com.tritongames.shoppingwishlist.data.models.checkout.StripeInterface
 import com.tritongames.shoppingwishlist.data.models.checkout.StripePaymentIntent
-import com.tritongames.shoppingwishlist.data.viewmodels.CheckOutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -94,8 +91,7 @@ class CheckoutActivity : AppCompatActivity() {
     private val TAG = "CheckoutActivity"
     val apiStripeKey = BuildConfig.STRIPE_API_KEY
     @Inject lateinit var stripeApi : StripeInterface
-     private val checkoutViewModel = ViewModelProvider(this)[CheckOutViewModel::class.java]
-
+   // private lateinit var checkoutViewModel: CheckOutViewModel
 
     private val billingDetailsCollectionConfiguration: PaymentSheet.BillingDetailsCollectionConfiguration =
         PaymentSheet.BillingDetailsCollectionConfiguration(
@@ -105,6 +101,8 @@ class CheckoutActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+       // checkoutViewModel = ViewModelProvider(this)[CheckOutViewModel::class.java]
+
 
         data.add("Apples")
         data.add("0.50")
@@ -142,46 +140,46 @@ class CheckoutActivity : AppCompatActivity() {
         }
 
         //Updating Payment Intent
-        lifecycleScope.launch {
-            val formattedDoubleString = subTotalCalc().replace("$", "")
-            checkoutViewModel.updatePaymentIntent("pi_3O7IEpF1WVVH8ZyJ0o46smo3", formattedDoubleString.toDouble())
-            checkoutViewModel.checkoutLoad.collect { event ->
-                when (event) {
-                    is CheckOutViewModel.CheckoutLoadingEvent.Failure -> {
-                        Log.d("CheckoutActivity", event.errorString)
-                    }
-
-                    is CheckOutViewModel.CheckoutLoadingEvent.Success -> {
-                        Log.d("CheckoutActivity", event.resultString)
-
-
-                    }
-
-                    else -> {
-                        Unit
-                    }
-                }
-            }
-        }
+//        lifecycleScope.launch {
+//            val formattedDoubleString = subTotalCalc().replace("$", "")
+//            checkoutViewModel.updatePaymentIntent("pi_3O7IEpF1WVVH8ZyJ0o46smo3", formattedDoubleString.toDouble())
+//            checkoutViewModel.checkoutLoad.collect { event ->
+//                when (event) {
+//                    is CheckOutViewModel.CheckoutLoadingEvent.Failure -> {
+//                        Log.d("CheckoutActivity", event.errorString)
+//                    }
+//
+//                    is CheckOutViewModel.CheckoutLoadingEvent.Success -> {
+//                        Log.d("CheckoutActivity", event.resultString)
+//
+//
+//                    }
+//
+//                    else -> {
+//                        Unit
+//                    }
+//                }
+//            }
+//        }
 
 
         // create payment intent
-        lifecycleScope.launch {
-          checkoutViewModel.checkoutLoad.collect {event ->
-                when (event){
-                    is CheckOutViewModel.CheckoutLoadingEvent.Failure -> {
-                        Log.d("CheckoutActivity", event.errorString)
-                    }
-                    is CheckOutViewModel.CheckoutLoadingEvent.Success -> {
-                       // postPaymentIntent(event.resultString)
-
-                    }
-
-                    else -> {Unit}
-                }
-
-            }
-        }
+//        lifecycleScope.launch {
+//          checkoutViewModel.checkoutLoad.collect {event ->
+//                when (event){
+//                    is CheckOutViewModel.CheckoutLoadingEvent.Failure -> {
+//                        Log.d("CheckoutActivity", event.errorString)
+//                    }
+//                    is CheckOutViewModel.CheckoutLoadingEvent.Success -> {
+//                       // postPaymentIntent(event.resultString)
+//
+//                    }
+//
+//                    else -> {Unit}
+//                }
+//
+//            }
+//        }
 
 
 
@@ -379,9 +377,9 @@ class CheckoutActivity : AppCompatActivity() {
             ElevatedButton(
                 onClick = {
 
-                    if (fbUserEmail != null) {
+                    /*if (fbUserEmail != null) {
                         checkoutViewModel.createNewPaymentIntent(subTotalCalc(), "usd", "Purchase", fbUserEmail)
-                    }
+                    }*/
                 },
                 modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally, false)
                     .wrapContentHeight(Alignment.CenterVertically, false),
@@ -457,7 +455,7 @@ class CheckoutActivity : AppCompatActivity() {
 
             }
             ElevatedButton(
-                onClick = { checkoutViewModel.createNewPaymentIntent(subTotalCalc(), "usd", "Test Payment Intent", "iziaulla@gmail.com")
+                onClick = { //checkoutViewModel.createNewPaymentIntent(subTotalCalc(), "usd", "Test Payment Intent", "iziaulla@gmail.com")
 
                 },
                 modifier =

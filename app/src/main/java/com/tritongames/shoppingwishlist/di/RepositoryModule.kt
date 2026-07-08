@@ -8,10 +8,6 @@ import com.tritongames.shoppingwishlist.data.repository.category.ShopCategoryRep
 import com.tritongames.shoppingwishlist.data.repository.category.ShopCategoryRepositoryImpl
 import com.tritongames.shoppingwishlist.data.repository.checkout.CheckoutRepository
 import com.tritongames.shoppingwishlist.data.repository.checkout.DefaultCheckoutRepository
-import com.tritongames.shoppingwishlist.data.repository.firebase.DefaultPurchaserDataRepository
-import com.tritongames.shoppingwishlist.data.repository.firebase.DefaultRecipientDataRepository
-import com.tritongames.shoppingwishlist.data.repository.firebase.PurchaserDataRepository
-import com.tritongames.shoppingwishlist.data.repository.firebase.RecipientDataRepository
 import com.tritongames.shoppingwishlist.data.repository.userPreferences.UserPreferenceRepository
 import com.tritongames.shoppingwishlist.data.repository.userPreferences.UserPreferenceRepositoryImpl
 import dagger.Binds
@@ -24,13 +20,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindFirebasePurchaserRepository(fbDefaultPurchaserRepo: DefaultPurchaserDataRepository): PurchaserDataRepository
-
-    @Singleton
-    @Binds
-    abstract fun bindFirebaseRecipientRepository(fbDefaultRecipientDataRepository: DefaultRecipientDataRepository): RecipientDataRepository
 
     @Singleton
     @Binds

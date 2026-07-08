@@ -13,7 +13,6 @@ import com.tritongames.shoppingwishlist.data.models.catalog.CatalogInterface
 import com.tritongames.shoppingwishlist.data.models.categories.ShoppingCategoriesInterface
 import com.tritongames.shoppingwishlist.data.models.checkout.StripeCustomerApi
 import com.tritongames.shoppingwishlist.data.models.checkout.StripeInterface
-import com.tritongames.shoppingwishlist.util.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +21,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainCoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -121,16 +121,16 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDispatchers(): DispatcherProvider = object : DispatcherProvider {
-        override val main: CoroutineDispatcher
-            get() = Dispatchers.Main
-        override val io: CoroutineDispatcher
-            get() = Dispatchers.IO
-        override val default: CoroutineDispatcher
-            get() = Dispatchers.Default
-        override val unconfined: CoroutineDispatcher
-            get() = Dispatchers.Unconfined
+    fun provideCoroutineDispatcherMain(): MainCoroutineDispatcher {
+        return Dispatchers.Main
     }
+
+    @Singleton
+    @Provides
+    fun provideCoroutineDispatcherIO(): CoroutineDispatcher {
+        return Dispatchers.IO
+    }
+
 
 }
 
