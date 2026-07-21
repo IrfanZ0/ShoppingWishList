@@ -16,3 +16,6 @@
 local.properties
 gradle.properties
 secrets.properties
+google-services.json
+shopping-wish-list-*.json
+index.php

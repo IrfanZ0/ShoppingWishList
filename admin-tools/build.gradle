@@ -5,11 +5,11 @@ plugins {
 }
 
 dependencies {
-    implementation libs.firebase.admin
+
 }
 
 application {
-    mainClass.set("com.tritongames.shoppingwishlist.util.FirebaseAdminKt")
+
 }
 
 ktor {

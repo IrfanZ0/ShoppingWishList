@@ -14,5 +14,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ShoppingWishList"
-include ':app'
+include ':androidApp'
 include ':admin-tools'
+include ':shared'

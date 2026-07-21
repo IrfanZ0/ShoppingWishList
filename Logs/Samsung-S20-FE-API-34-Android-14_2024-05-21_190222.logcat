@@ -12,10 +12,10 @@
       "type": "HANDHELD",
       "isEmulator": true
     },
-    "filter": "package:com.tritongames.shoppingwishlist",
+    "filter": "package:com.halalark.shoppingwishlist",
     "projectApplicationIds": [
-      "com.tritongames.shoppingwishlist",
-      "com.tritongames.shoppingwishlist.test"
+      "com.halalark.shoppingwishlist",
+      "com.halalark.shoppingwishlist.test"
     ]
   },
   "logcatMessages": [
@@ -24,8 +24,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -39,8 +39,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -54,8 +54,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -69,8 +69,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -84,8 +84,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -99,8 +99,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -114,8 +114,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -129,8 +129,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -144,8 +144,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -159,8 +159,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -174,8 +174,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -189,8 +189,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -204,8 +204,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -219,8 +219,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -234,8 +234,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -249,8 +249,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -264,8 +264,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -279,8 +279,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -294,8 +294,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -309,8 +309,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -324,8 +324,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -339,8 +339,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -354,8 +354,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -369,8 +369,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -384,8 +384,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -399,8 +399,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -414,8 +414,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -429,8 +429,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -444,8 +444,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -459,8 +459,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -474,8 +474,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -489,8 +489,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -504,8 +504,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -519,8 +519,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -534,8 +534,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -549,8 +549,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -564,8 +564,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -579,8 +579,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -594,8 +594,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -609,8 +609,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -624,8 +624,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -639,8 +639,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -654,8 +654,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -669,8 +669,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -684,8 +684,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -699,8 +699,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -714,8 +714,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -729,8 +729,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -744,8 +744,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -759,8 +759,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -774,8 +774,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -789,8 +789,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -804,8 +804,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -819,8 +819,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -834,8 +834,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -849,8 +849,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -864,8 +864,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -879,8 +879,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -894,8 +894,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -909,8 +909,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -924,8 +924,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -939,8 +939,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -954,8 +954,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -969,8 +969,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -984,8 +984,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -999,8 +999,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1014,8 +1014,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1029,8 +1029,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1044,8 +1044,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1059,8 +1059,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1074,8 +1074,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1089,8 +1089,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1104,8 +1104,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1119,8 +1119,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1134,8 +1134,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1149,8 +1149,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342565,
@@ -1164,8 +1164,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1179,8 +1179,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1194,8 +1194,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1209,8 +1209,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1224,8 +1224,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1239,8 +1239,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1254,8 +1254,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1269,8 +1269,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1284,8 +1284,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1299,8 +1299,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1314,8 +1314,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1329,8 +1329,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1344,8 +1344,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1359,8 +1359,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1374,8 +1374,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1389,8 +1389,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1404,8 +1404,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1419,8 +1419,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1434,8 +1434,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1449,8 +1449,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1464,8 +1464,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1479,8 +1479,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1494,8 +1494,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1509,8 +1509,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1524,8 +1524,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1539,8 +1539,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1554,8 +1554,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1569,8 +1569,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1584,8 +1584,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1599,8 +1599,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1614,8 +1614,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1629,8 +1629,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1644,8 +1644,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1659,8 +1659,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1674,8 +1674,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1689,8 +1689,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1704,8 +1704,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1719,8 +1719,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1734,8 +1734,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1749,8 +1749,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1764,8 +1764,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1779,8 +1779,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1794,8 +1794,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1809,8 +1809,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1824,8 +1824,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1839,8 +1839,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1854,8 +1854,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1869,8 +1869,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1884,8 +1884,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1899,8 +1899,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1914,8 +1914,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1929,8 +1929,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1944,8 +1944,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1959,8 +1959,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1974,8 +1974,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -1989,8 +1989,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2004,8 +2004,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2019,8 +2019,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2034,8 +2034,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2049,8 +2049,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2064,8 +2064,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2079,8 +2079,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2094,8 +2094,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2109,8 +2109,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2124,8 +2124,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2139,8 +2139,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2154,8 +2154,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2169,8 +2169,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2184,8 +2184,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2199,8 +2199,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2214,8 +2214,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2229,8 +2229,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2244,8 +2244,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2259,8 +2259,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2274,8 +2274,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2289,8 +2289,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2304,8 +2304,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2319,8 +2319,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2334,8 +2334,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2349,8 +2349,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2364,8 +2364,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2379,8 +2379,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2394,8 +2394,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2409,8 +2409,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2424,8 +2424,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2439,8 +2439,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2454,8 +2454,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2469,8 +2469,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2484,8 +2484,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2499,8 +2499,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2514,8 +2514,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2529,8 +2529,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2544,8 +2544,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2559,8 +2559,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2574,8 +2574,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2589,8 +2589,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2604,8 +2604,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2619,8 +2619,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2634,8 +2634,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2649,8 +2649,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2664,8 +2664,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2679,8 +2679,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2694,8 +2694,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2709,8 +2709,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2724,8 +2724,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2739,8 +2739,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2754,8 +2754,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2769,8 +2769,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2784,8 +2784,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2799,8 +2799,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2814,8 +2814,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2829,8 +2829,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2844,8 +2844,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2859,8 +2859,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2874,8 +2874,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2889,8 +2889,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2904,8 +2904,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2919,8 +2919,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2934,8 +2934,8 @@
         "logLevel": "ERROR",
         "pid": 5500,
         "tid": 5500,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "AndroidRuntime",
         "timestamp": {
           "seconds": 1716342566,
@@ -2949,8 +2949,8 @@
         "logLevel": "INFO",
         "pid": 5500,
         "tid": 5507,
-        "applicationId": "com.tritongames.shoppingwishlist",
-        "processName": "com.tritongames.shoppingwishlist",
+        "applicationId": "com.halalark.shoppingwishlist",
+        "processName": "com.halalark.shoppingwishlist",
         "tag": "hoppingwishlist",
         "timestamp": {
           "seconds": 1716342567,
@@ -2987,7 +2987,7 @@
           "nanos": 234000000
         }
       },
-      "message": "  Force finishing activity com.tritongames.shoppingwishlist/.presentation.CreateNewUserRegistration"
+      "message": "  Force finishing activity com.halalark.shoppingwishlist/.presentation.CreateNewUserRegistration"
     },
     {
       "header": {
@@ -3017,7 +3017,7 @@
           "nanos": 244000000
         }
       },
-      "message": "  Force finishing activity com.tritongames.shoppingwishlist/.presentation.MainActivity"
+      "message": "  Force finishing activity com.halalark.shoppingwishlist/.presentation.MainActivity"
     },
     {
       "header": {
@@ -3032,7 +3032,7 @@
           "nanos": 250000000
         }
       },
-      "message": "Showing crash dialog for package com.tritongames.shoppingwishlist u0"
+      "message": "Showing crash dialog for package com.halalark.shoppingwishlist u0"
     },
     {
       "header": {
@@ -3152,7 +3152,7 @@
           "nanos": 395000000
         }
       },
-      "message": "Window{1d4c50d u0 Application Error: com.tritongames.shoppingwishlist}: Setting back callback OnBackInvokedCallbackInfo{mCallback\u003dandroid.window.WindowOnBackInvokedDispatcher$OnBackInvokedCallbackWrapper@c7eb14b, mPriority\u003d0, mIsAnimationCallback\u003dfalse}"
+      "message": "Window{1d4c50d u0 Application Error: com.halalark.shoppingwishlist}: Setting back callback OnBackInvokedCallbackInfo{mCallback\u003dandroid.window.WindowOnBackInvokedDispatcher$OnBackInvokedCallbackWrapper@c7eb14b, mPriority\u003d0, mIsAnimationCallback\u003dfalse}"
     },
     {
       "header": {
@@ -3227,7 +3227,7 @@
           "nanos": 740000000
         }
       },
-      "message": "Activity top resumed state loss timeout for ActivityRecord{99da0fe u0 com.tritongames.shoppingwishlist/.presentation.CreateNewUserRegistration t9 f}}"
+      "message": "Activity top resumed state loss timeout for ActivityRecord{99da0fe u0 com.halalark.shoppingwishlist/.presentation.CreateNewUserRegistration t9 f}}"
     },
     {
       "header": {
@@ -3242,7 +3242,7 @@
           "nanos": 741000000
         }
       },
-      "message": "Activity pause timeout for ActivityRecord{99da0fe u0 com.tritongames.shoppingwishlist/.presentation.CreateNewUserRegistration t9 f}}"
+      "message": "Activity pause timeout for ActivityRecord{99da0fe u0 com.halalark.shoppingwishlist/.presentation.CreateNewUserRegistration t9 f}}"
     },
     {
       "header": {
@@ -3392,7 +3392,7 @@
           "nanos": 76000000
         }
       },
-      "message": "    info\u003d{id\u003d13 t\u003dCLOSE f\u003d0x10 trk\u003d0 r\u003d[0@Point(0, 0)] c\u003d[{WCT{RemoteToken{4242eb9 Task{c07a0a #1 type\u003dhome}}} m\u003dTO_FRONT f\u003dSHOW_WALLPAPER|MOVE_TO_TOP leash\u003dSurface(name\u003dTask\u003d1)/@0xfce03d1 sb\u003dRect(0, 0 - 1080, 2400) eb\u003dRect(0, 0 - 1080, 2400) d\u003d0},{WCT{RemoteToken{d0bdb48 Task{75a1671 #9 type\u003dstandard A\u003d10190:com.tritongames.shoppingwishlist}}} m\u003dTO_BACK f\u003dNONE leash\u003dSurface(name\u003dTask\u003d9)/@0x7d422a9 sb\u003dRect(0, 0 - 1080, 2400) eb\u003dRect(0, 0 - 1080, 2400) d\u003d0},{null m\u003dTO_FRONT f\u003dIS_WALLPAPER leash\u003dSurface(name\u003dWallpaperWindowToken{42a6e4f token\u003dandroid.os.Binder@d8eb0ae})/@0x2377a5b sb\u003dRect(0, 0 - 1080, 2400) eb\u003dRect(0, 0 - 1080, 2400) d\u003d0}]}"
+      "message": "    info\u003d{id\u003d13 t\u003dCLOSE f\u003d0x10 trk\u003d0 r\u003d[0@Point(0, 0)] c\u003d[{WCT{RemoteToken{4242eb9 Task{c07a0a #1 type\u003dhome}}} m\u003dTO_FRONT f\u003dSHOW_WALLPAPER|MOVE_TO_TOP leash\u003dSurface(name\u003dTask\u003d1)/@0xfce03d1 sb\u003dRect(0, 0 - 1080, 2400) eb\u003dRect(0, 0 - 1080, 2400) d\u003d0},{WCT{RemoteToken{d0bdb48 Task{75a1671 #9 type\u003dstandard A\u003d10190:com.halalark.shoppingwishlist}}} m\u003dTO_BACK f\u003dNONE leash\u003dSurface(name\u003dTask\u003d9)/@0x7d422a9 sb\u003dRect(0, 0 - 1080, 2400) eb\u003dRect(0, 0 - 1080, 2400) d\u003d0},{null m\u003dTO_FRONT f\u003dIS_WALLPAPER leash\u003dSurface(name\u003dWallpaperWindowToken{42a6e4f token\u003dandroid.os.Binder@d8eb0ae})/@0x2377a5b sb\u003dRect(0, 0 - 1080, 2400) eb\u003dRect(0, 0 - 1080, 2400) d\u003d0}]}"
     },
     {
       "header": {
@@ -4322,7 +4322,7 @@
           "nanos": 567000000
         }
       },
-      "message": "Window{1d4c50d u0 Application Error: com.tritongames.shoppingwishlist}: Setting back callback null"
+      "message": "Window{1d4c50d u0 Application Error: com.halalark.shoppingwishlist}: Setting back callback null"
     },
     {
       "header": {
@@ -4382,7 +4382,7 @@
           "nanos": 579000000
         }
       },
-      "message": "Killing 5500:com.tritongames.shoppingwishlist/u0a190 (adj 900): crash"
+      "message": "Killing 5500:com.halalark.shoppingwishlist/u0a190 (adj 900): crash"
     },
     {
       "header": {
@@ -4397,7 +4397,7 @@
           "nanos": 582000000
         }
       },
-      "message": "Input channel object \u00271b78375 com.tritongames.shoppingwishlist/com.tritongames.shoppingwishlist.presentation.CreateNewUserRegistration (client)\u0027 was disposed without first being removed with the input manager!"
+      "message": "Input channel object \u00271b78375 com.halalark.shoppingwishlist/com.halalark.shoppingwishlist.presentation.CreateNewUserRegistration (client)\u0027 was disposed without first being removed with the input manager!"
     },
     {
       "header": {
@@ -4412,7 +4412,7 @@
           "nanos": 595000000
         }
       },
-      "message": "Input channel object \u0027cddcc90 com.tritongames.shoppingwishlist/com.tritongames.shoppingwishlist.presentation.MainActivity (client)\u0027 was disposed without first being removed with the input manager!"
+      "message": "Input channel object \u0027cddcc90 com.halalark.shoppingwishlist/com.halalark.shoppingwishlist.presentation.MainActivity (client)\u0027 was disposed without first being removed with the input manager!"
     },
     {
       "header": {
@@ -4427,7 +4427,7 @@
           "nanos": 0
         }
       },
-      "message": "---------------------------- PROCESS ENDED (5500) for package com.tritongames.shoppingwishlist ----------------------------"
+      "message": "---------------------------- PROCESS ENDED (5500) for package com.halalark.shoppingwishlist ----------------------------"
     },
     {
       "header": {
@@ -4502,7 +4502,7 @@
           "nanos": 701000000
         }
       },
-      "message": "com.tritongames.shoppingwishlist:a758a2c1: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_REMOVE_CLIENT"
+      "message": "com.halalark.shoppingwishlist:a758a2c1: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_REMOVE_CLIENT"
     },
     {
       "header": {
@@ -4547,7 +4547,7 @@
           "nanos": 715000000
         }
       },
-      "message": "com.tritongames.shoppingwishlist:a758a2c1: onCancelled at PHASE_SERVER_SHOULD_HIDE"
+      "message": "com.halalark.shoppingwishlist:a758a2c1: onCancelled at PHASE_SERVER_SHOULD_HIDE"
     },
     {
       "header": {
@@ -4697,7 +4697,7 @@
           "nanos": 841000000
         }
       },
-      "message": "Got obituary of 5500:com.tritongames.shoppingwishlist"
+      "message": "Got obituary of 5500:com.halalark.shoppingwishlist"
     },
     {
       "header": {
@@ -4802,7 +4802,7 @@
           "nanos": 19000000
         }
       },
-      "message": "Input channel object \u00271d4c50d Application Error: com.tritongames.shoppingwishlist (client)\u0027 was disposed without first being removed with the input manager!"
+      "message": "Input channel object \u00271d4c50d Application Error: com.halalark.shoppingwishlist (client)\u0027 was disposed without first being removed with the input manager!"
     },
     {
       "header": {

@@ -3,15 +3,14 @@
 
 
 # --- Firebase ---
-firebaseAuthKtx = "23.2.1"
-firebaseFirestoreKtx = "25.1.4"
-firebaseBom = "34.1.0"
-firebaseStorageKtx = "21.0.2"
-firebaseAdmin = "9.3.0"
+firebaseBom = "34.16.0"
+firebaseKmp = "2.5.0"
+
 
 
 # --- Google Maps ---
 playServicesMaps = "20.0.0"
+playServicesBase = "18.10.0"
 mapsCompose = "8.3.0"
 mapsUtil = "4.4.0"
 placesGoogleMap = "5.2.0"
@@ -21,8 +20,7 @@ hilt-version = "2.59.2"
 
 
 # --- Http Request ---
-retrofit = "3.0.0"
-okhttp = "5.4.0"
+ktor-version = "3.5.1"
 
 # --- JSON serializers/deserializers
 gson = "3.0.0"
@@ -94,6 +92,10 @@ coroutineCore = "1.11.0"
 
 multidex = "2.0.1"
 material3 = "1.4.0"
+kotlinStdlib = "2.2.10"
+kotlinTest = "2.2.10"
+runner = "1.7.0"
+core = "1.7.0"
 
 [libraries]
 
@@ -116,14 +118,14 @@ androidx-datastore-preferences = { group = "androidx.datastore", name = "datasto
 androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "datastore" }
 
 # --- Firebase ---
-firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom"}
-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
-firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx"}
-firebase-admin = { group = "com.google.firebase", name = "firebase-admin", version.ref = "firebaseAdmin"}
+firebase-auth-kmp = { group = "dev.gitlive", name = "firebase-auth", version.ref = "firebaseKmp" }
+firebase-core-kmp = { group = "dev.gitlive", name = "firebase-app", version.ref = "firebaseKmp"}
+firebase-firestore-kmp = { group = "dev.gitlive", name = "firebase-firestore", version.ref = "firebaseKmp" }
+firebase-common = {group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom"}
 
 # --- Google Maps ---
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+play-services-base = { group = "com.google.android.gms", name = "play-services-base", version.ref = "playServicesBase" }
 maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "mapsCompose" }
 android-maps-util = { group = "com.google.maps.android", name = "android-maps-utils", version.ref = "mapsUtil" }
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "placesGoogleMap"}
@@ -136,8 +138,8 @@ hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-comp
 
 
 # --- Http Request ---
-retrofit = {  group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp"}
+ktor-client-core = {group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-version"}
+ktor-client-network = {group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor-version"}
 
 
 # --- JSON serializers/deserializers ---
@@ -189,6 +191,10 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlinTest" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 
 
 
@@ -206,3 +212,6 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt-vers
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = {id = "io.ktor.plugin", version.ref = "ktor"}
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+android-lint = { id = "com.android.lint", version.ref = "agp" }

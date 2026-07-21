@@ -2,12 +2,18 @@
 require 'vendor/autoload.php';
 if(isset($_POST['authKey']) && ($_POST['authKey'] == "abc"){
 
-    $stripe = new \Stripe\StripeClient('sk_test_51JeixFF1WVVH8ZyJSlj2xwp3f2fjGaab9ut1V7E4KrrXu7K3SBxzbYFSJ4kgwYCy9hhCyzNhqU3FLRSuYdoQ6La000RhjXTi24');
+    $stripeSecretKey = getenv('STRIPE_SECRET_KEY');
+    if (!$stripeSecretKey) {
+        http_response_code(500);
+        echo "Server configuration error: Stripe Secret Key not set.";
+        exit;
+    }
+    $stripe = new \Stripe\StripeClient($stripeSecretKey);
 
     // Use an existing Customer ID if this is a returning customer.
     $customer = $stripe->customers->create(
     [
-        'name' => 'Irfan Ziaulla'
+        'name' => 'Irfan Ziaulla',
         'address' => [
         'line1' => '456 Example Street',
         'postal_code' => '45871',
@@ -16,7 +22,7 @@ if(isset($_POST['authKey']) && ($_POST['authKey'] == "abc"){
         'country' => 'US',
     ]
 
-    );
+    ]);
     $ephemeralKey = $stripe->ephemeralKeys->create([
       'customer' => $customer->id,
     ], [

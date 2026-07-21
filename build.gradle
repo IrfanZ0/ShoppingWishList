@@ -1,23 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    ext.kotlin_version = '2.0.21'
-    ext.fragment_version = "1.6.0"
-    ext.coroutines_version = "1.6.0"
-    ext.compose_version = '1.7.0-beta01'
-    ext.hilt_version = '2.59.2'
-
-    repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-    }
-
-    dependencies {
-        // Dependencies are now managed via the plugins block and version catalog
-
-    }
-}
-
 plugins {
     alias libs.plugins.android.application apply false
     alias libs.plugins.android.library apply false
@@ -29,14 +10,8 @@ plugins {
     alias libs.plugins.hilt.android apply false
     alias libs.plugins.kotlin.compose apply false
     alias libs.plugins.ktor apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.android.kotlin.multiplatform.library) apply false
+    alias(libs.plugins.android.lint) apply false
 
 }
-
-repositories {
-
-}
-
-
-
-
-

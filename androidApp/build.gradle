@@ -1,0 +1,192 @@
+plugins {
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.ksp
+    alias libs.plugins.secrets.gradle.plugin
+    alias libs.plugins.hilt.android
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.compose
+    alias libs.plugins.google.gms.google.services
+}
+
+android {
+    namespace 'com.halalark.shoppingwishlist'
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId "com.halalark.shoppingwishlist"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("secrets.properties").newDataInputStream())
+
+
+        buildConfigField "String", "BEST_BUY_API_KEY", "\"${properties.getProperty("BEST_BUY_API_KEY")}\""
+        buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${properties.getProperty("GOOGLE_MAPS_API_KEY")}\""
+        buildConfigField "String", "FIREBASE_API_KEY", "\"${properties.getProperty("FIREBASE_API_KEY")}\""
+        buildConfigField "String", "STRIPE_API_KEY", "\"${properties.getProperty("STRIPE_API_KEY")}\""
+
+        manifestPlaceholders = [
+            GOOGLE_MAPS_API_KEY: properties.getProperty("GOOGLE_MAPS_API_KEY"),
+            FIREBASE_API_KEY: properties.getProperty("FIREBASE_API_KEY")
+        ]
+    }
+
+
+    buildFeatures {
+        viewBinding true
+        compose true
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
+
+        }
+        debug {
+            debuggable true
+            jniDebuggable true
+            testCoverageEnabled false
+        }
+        debuggable.initWith(buildTypes.debug)
+        debuggable {
+            testCoverageEnabled = false
+            debuggable true
+            jniDebuggable true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+}
+
+
+
+hilt {
+    enableAggregatingTask false
+}
+
+
+// Remove kapt block as we are migrating to KSP
+
+dependencies {
+    implementation(project(":shared"))
+
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.material3
+
+    //Annotation
+    implementation libs.javax.annotation
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+
+
+
+    //Junit 4
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+
+
+    //Fragment
+    // Kotlin
+    implementation libs.androidx.fragment.ktx
+
+    //Dagger - Hilt
+    implementation libs.dagger.hilt
+    ksp libs.hilt.compiler
+
+
+    // Activity KTX for viewModels()
+    implementation libs.androidx.activity.ktx
+
+
+
+    // Lifecycle
+    implementation libs.androidx.lifecycle.extensions
+    implementation libs.androidx.lifecycle.livedata.ktx
+    implementation libs.androidx.lifecycle.runtime.ktx
+
+    // DataStore
+    implementation libs.androidx.datastore.preferences
+    implementation libs.androidx.datastore.core
+
+    // GlideImage
+    implementation libs.glide.compose
+
+
+    // ktor
+
+    implementation libs.gson
+
+
+    // Coroutines
+    implementation libs.kotlinx.coroutines.core
+    implementation libs.kotlinx.coroutines.android
+
+    // Coroutine Lifecycle Scopes
+
+    //Coroutine testing
+    testImplementation libs.kotlinx.coroutines.test
+
+
+
+    // For instrumented tests.
+    androidTestImplementation libs.dagger.hilt.test
+    // with Kotlin
+            kspAndroidTest libs.hilt.android.compiler
+    // ...with Java.
+    androidTestAnnotationProcessor libs.hilt.android.compiler
+
+    // Google Maps for Android
+    implementation libs.play.services.maps
+    implementation libs.play.services.base
+    implementation libs.places
+    implementation libs.maps.compose
+    implementation libs.android.maps.util
+
+
+    // Stripe Android SDK
+    implementation libs.stripe.android
+    implementation libs.stripe.java
+
+
+  //Multidex
+    implementation libs.androidx.multidex
+
+    // Compose
+    implementation libs.compose.animation
+    implementation libs.compose.foundation
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.compose.runtime
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.activity.compose
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.compose.ui.graphics
+
+
+    androidTestImplementation libs.androidx.compose.ui.test.junit4
+
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Optional Compose Libraries
+    implementation libs.androidx.compose.material.icon.core
+    implementation libs.androidx.compose.material.icon.extended
+    implementation libs.androidx.lifecycle.viewmodel.compose
+
+
+}
