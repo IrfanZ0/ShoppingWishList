@@ -165,10 +165,6 @@ dependencies {
     implementation libs.stripe.android
     implementation libs.stripe.java
 
-
-  //Multidex
-    implementation libs.androidx.multidex
-
     // Compose
     implementation libs.compose.animation
     implementation libs.compose.foundation
