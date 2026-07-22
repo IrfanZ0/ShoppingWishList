@@ -11,9 +11,3 @@ dependencies {
 application {
 
 }
-
-ktor {
-    fatJar {
-        archiveFileName.set("admin-tools-fat.jar")
-    }
-}
